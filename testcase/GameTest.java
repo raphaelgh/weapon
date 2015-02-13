@@ -99,7 +99,7 @@ public class GameTest {
 	}
 	
 	@Test
-	public void should_soldier_use_weapon_with_poison_attack_person(){
+	public void should_soldier_use_weapon_with_poison_and_possibility_attack_person(){
 		when(mockedRandom.nextInt(9))
 		.thenReturn(9)
 		.thenReturn(9)
@@ -121,7 +121,7 @@ public class GameTest {
 	}
 	
 	@Test
-	public void should_soldier_use_weapon_with_freeze_attack_soldier_use_weapon_with_poison(){
+	public void should_soldier_use_weapon_with_freeze_and_possibility_attack_soldier_use_weapon_with_poison_and_possibility(){
 		Random poisonRandom = mock(Random.class);
 		Random freezeRandom = mock(Random.class);
 		when(poisonRandom.nextInt(9))
