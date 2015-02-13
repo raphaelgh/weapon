@@ -10,12 +10,17 @@ public abstract class Weapon{
 	protected int value;
 	protected PrintStream printer;
 	protected int harmValue = 2;
+	protected int possibility;
 	
 	public Weapon(String name, int value, int harmvalue, PrintStream out){
 		this.name = name;
 		this.value = value;
 		this.printer = out;
 		this.harmValue = harmvalue;
+	}
+	
+	public void setPossibility(int p){
+		this.possibility = p;
 	}
 	
 	public int value(){
@@ -27,15 +32,21 @@ public abstract class Weapon{
 	}
 	
 	public void harm(Player player){
-		player.beAttack(harmValue);
-		print(player);
+		//System.out.println(this.possibility);
+		if(possibility == 1){
+			player.beAttack(harmValue);
+			print(player);
+		}
 	}
 
 	public abstract String harmStatus(String name);
 	public abstract void print(Player player);
 
 	public String use() {
-		return " use " + name;
+		if(possibility == 1){
+			return " use " + name;
+		}
+		return " use " + (name.split(" "))[1];
 	}
 	
 }

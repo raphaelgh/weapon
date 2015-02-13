@@ -1,6 +1,8 @@
 package com.tw.trainning.fightergame.testcase;
 
 import java.io.PrintStream;
+import java.util.Random;
+
 import static org.mockito.Mockito.*;
 
 import org.junit.Before;
@@ -11,6 +13,7 @@ import com.tw.trainning.fightergame.entity.Player;
 import com.tw.trainning.fightergame.entity.Soldier;
 import com.tw.trainning.fightergame.weapon.Protect;
 import com.tw.trainning.fightergame.weapon.Weapon;
+import com.tw.trainning.fightergame.weapon.WeaponWithFreeze;
 import com.tw.trainning.fightergame.weapon.WeaponWithPoison;
 
 
@@ -22,6 +25,7 @@ public class GameTest {
 	Soldier soldier;
 	Player person = new Player("Jack", "person", 100, 30, out);
 	Game game;
+	Random mockedRandom = mock(Random.class);
 	
 	@Before
 	public void setup(){
@@ -54,7 +58,7 @@ public class GameTest {
 	public void should_soldier_tommy_with_attack_20_use_weapon_20_with_protect_10_fight_with_person_jack_with_attack_30(){
 		when(weapon.use()).thenReturn(" use stick");
 		when(weapon.harmStatus(person.getName())).thenReturn("");
-		Player soldier = new Player("Tommy", "soldier", 100, 20, weapon, protect, out);
+		Player soldier = new Player("Tommy", "soldier", 100, 20, weapon, protect, out, null);
 		game = new Game(soldier, person, out);
 		game.start();
 		verify(out).println("soldier Tommy use stick attack person Jack. Jack lose 40 blood. Jack left 60 blood.");
@@ -69,7 +73,7 @@ public class GameTest {
 	public void should_person_jack_with_attack_30_fight_with_soldier_tommy_with_attack_20_use_weapon_stick_20_with_protect_10(){
 		when(weapon.use()).thenReturn(" use stick");
 		when(weapon.harmStatus(person.getName())).thenReturn("");
-		Player soldier = new Player("Tommy", "soldier", 100, 20, weapon, protect, out);
+		Player soldier = new Player("Tommy", "soldier", 100, 20, weapon, protect, out, null);
 		game = new Game(soldier, person, out);
 		game.start();
 		verify(out).println("soldier Tommy use stick attack person Jack. Jack lose 40 blood. Jack left 60 blood.");
@@ -96,8 +100,13 @@ public class GameTest {
 	
 	@Test
 	public void should_soldier_use_weapon_with_poison_attack_person(){
+		when(mockedRandom.nextInt(9))
+		.thenReturn(9)
+		.thenReturn(9)
+		.thenReturn(9)
+		.thenReturn(9);
 		Weapon weapon = new WeaponWithPoison("venom", 20, 2, out);
-		Player soldier = new Player("Tommy", "soldier", 100, 20, weapon, protect, out);
+		Player soldier = new Player("Tommy", "soldier", 100, 20, weapon, protect, out, mockedRandom);
 		Player person = new Player("Jack", "person", 100, 30, out);
 		game = new Game(soldier, person, out);
 		game.start();
@@ -109,6 +118,43 @@ public class GameTest {
 		verify(out).println("person Jack attack soldier Tommy. Tommy lose 20 blood. Tommy left 60 blood.");
 		verify(out).println("soldier Tommy use venom attack person Jack. Jack lose 40 blood. Jack is poisoned. Jack left -24 blood.");
 		verify(out).println("Jack be defeated!");
+	}
+	
+	@Test
+	public void should_soldier_use_weapon_with_freeze_attack_soldier_use_weapon_with_poison(){
+		Random poisonRandom = mock(Random.class);
+		Random freezeRandom = mock(Random.class);
+		when(poisonRandom.nextInt(9))
+		.thenReturn(9)
+		.thenReturn(9)
+		.thenReturn(1)
+		.thenReturn(9);
+		when(freezeRandom.nextInt(9))
+		.thenReturn(9)
+		.thenReturn(2)
+		.thenReturn(1)
+		.thenReturn(2);
+		Weapon weaponWithPoison = new WeaponWithPoison("poison sword", 20, 2, out);
+		Weapon weaponWithFreeze = new WeaponWithFreeze("freeze sword", 20, 0, out);
+		Player tommy = new Player("Tommy", "soldier", 100, 20, weaponWithPoison, protect, out, poisonRandom);
+		Player jack = new Player("Jack", "soldier", 100, 20, weaponWithFreeze, protect, out, freezeRandom);
+		game = new Game(tommy, jack, out);
+		game.start();
+		verify(out).println("soldier Tommy use poison sword attack soldier Jack. Jack lose 30 blood. Jack is poisoned. Jack left 70 blood.");
+		verify(out).println("Jack is poisoned and lost 2 blood. Jack left 68 blood.");
+		verify(out).println("soldier Jack use freeze sword attack soldier Tommy. Tommy lose 30 blood. Tommy is freezed. Tommy left 70 blood.");
+		//verify(out).println("Tommy is freezed.");
+		verify(out).println("soldier Tommy use poison sword attack soldier Jack. Jack lose 30 blood. Jack is poisoned. Jack left 38 blood.");
+		verify(out).println("Jack is poisoned and lost 2 blood. Jack left 36 blood.");
+		verify(out).println("soldier Jack use sword attack soldier Tommy. Tommy lose 30 blood. Tommy left 40 blood.");
+		//verify(out).println("Tommy is freezed.");
+		verify(out).println("soldier Tommy use sword attack soldier Jack. Jack lose 30 blood. Jack left 6 blood.");
+		//verify(out).println("Jack is poisoned and lost 2 blood. Jack left 4 blood.");
+		verify(out).println("soldier Jack use sword attack soldier Tommy. Tommy lose 30 blood. Tommy left 10 blood.");
+		//verify(out).println("Tommy is freezed.");
+		verify(out).println("Tommy is freezed and cannot attack.");
+		verify(out).println("soldier Jack use sword attack soldier Tommy. Tommy lose 30 blood. Tommy left -20 blood.");
+		verify(out).println("Tommy be defeated!");
 	}
 	
 //	@Test

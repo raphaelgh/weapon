@@ -1,13 +1,13 @@
 package com.tw.trainning.fightergame.weapon;
 
-import java.io.PrintStream;
+import java.util.Random;
 
 import com.tw.trainning.fightergame.entity.Player;
 
 public class NullWeapon extends Weapon{
 
-	public NullWeapon(String name, int value, int harm, PrintStream out) {
-		super(name, value, harm, out);
+	public NullWeapon() {
+		super("", 0, 0, null);
 	}
 
 	@Override

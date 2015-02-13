@@ -1,7 +1,6 @@
 package com.tw.trainning.fightergame.weapon;
 
 import java.io.PrintStream;
-
 import com.tw.trainning.fightergame.entity.Player;
 
 public class WeaponWithPoison extends Weapon{
@@ -16,15 +15,13 @@ public class WeaponWithPoison extends Weapon{
 				player.getName() + " left " + player.getBlood() + " blood.";
 		printer.println(info);
 	}
-	
-	@Override
-	public String toString(){
-		return "poison";
-	}
 
 	@Override
 	public String harmStatus(String name) {
-		return name + " is poisoned. ";
+		if(possibility == 1){
+			return name + " is poisoned. ";
+		}
+		return "";
 	}
 
 }

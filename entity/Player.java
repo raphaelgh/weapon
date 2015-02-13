@@ -1,6 +1,7 @@
 package com.tw.trainning.fightergame.entity;
 
 import java.io.PrintStream;
+import java.util.Random;
 
 import com.tw.trainning.fightergame.weapon.NullWeapon;
 import com.tw.trainning.fightergame.weapon.Protect;
@@ -13,9 +14,11 @@ public class Player {
 	private int attack;
 	protected PrintStream printer;
 	private String role;
-	private Weapon myWeapon = new NullWeapon("null weapon", 0, 0, printer);
-	private Weapon enemyWeapon = new NullWeapon("null weapon", 0, 0, printer);
+	private Weapon myWeapon = new NullWeapon();
+	private Weapon enemyWeapon = new NullWeapon();
 	private Protect protect = new Protect(0);
+	private boolean stopAttackOnce = false;
+	private Random random;
 	
 	public Player(String name, String role, int blood, int attack, PrintStream printer) {
 		this.name = name;
@@ -25,7 +28,7 @@ public class Player {
 		this.role = role + " ";
 	}
 	
-	public Player(String name, String role, int blood, int attack, Weapon weapon, Protect protect, PrintStream printer) {
+	public Player(String name, String role, int blood, int attack, Weapon weapon, Protect protect, PrintStream printer, Random random) {
 		this.name = name;
 		this.blood = blood;
 		this.attack = attack + weapon.value();
@@ -33,6 +36,7 @@ public class Player {
 		this.role = role + " ";
 		this.myWeapon = weapon;
 		this.protect = protect;
+		this.random = random;
 	}
 	
 	public int getBlood() {
@@ -46,12 +50,24 @@ public class Player {
 	protected String getRole() {
 		return role;
 	}
+	
+	public void stopAttackOnce(){
+		this.stopAttackOnce = true;
+	}
 
 	public void attack(Player p){
 		this.enemyWeapon.harm(this);
+		if(this.stopAttackOnce){
+			this.stopAttackOnce = false;
+			return;
+		}
 		p.beAttack(this.attack - p.protect.value());
+		if(random != null){
+			myWeapon.setPossibility(random.nextInt(9)/9);
+		}
 		p.setWeapon(myWeapon);
 		print(p);
+		this.enemyWeapon = new NullWeapon();
 	}
 	
 //	public void attackWithWeapon(Player p, Weapon weapon){
