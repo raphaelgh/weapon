@@ -11,10 +11,11 @@ public class Player {
 	
 	public static final String DEFEATED = "被打败了";
 
-	private String name;
-	private int attackValue;
-	private int blood;
-	private String status;
+	protected String name;
+	protected int attackValue;
+	protected int blood;
+	protected String status;
+	private final String role = "普通人";
 	
 	public Player(String name, int attackValue, int blood) {
 		this.name = name;
@@ -25,12 +26,16 @@ public class Player {
 	public boolean canBeAttack() {
 		return blood > 0;
 	}
+	
+	protected String getRole(){
+		return role;
+	}
 
 	public void attack(Player playerB, PrintStream out) {
-		playerB.beAttacked(attackValue, name+"攻击了"+playerB.name+",", out);
+		playerB.beAttacked(attackValue, getRole()+name+"攻击了"+playerB.getRole()+playerB.name+",", out);
 	}
 	
-	private void beAttacked(int attackValue, String info, PrintStream out){
+	protected void beAttacked(int attackValue, String info, PrintStream out){
 		blood = blood - attackValue;
 		out.println(info+name+"受到"+attackValue+"点伤害,"+
 				name+"剩余生命:"+blood);
