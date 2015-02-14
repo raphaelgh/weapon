@@ -18,11 +18,11 @@ public class Game {
 
 	public void start(){
 		while(playerA.canBeAttack() && playerB.canBeAttack()){
-			playerA.attack(playerB);
+			playerA.attack(playerB, out);
 			if(!playerB.canBeAttack()){
 				break;
 			}
-			playerB.attack(playerA);
+			playerB.attack(playerA, out);
 		}
 		Player player = playerA.canBeAttack() ? playerB : playerA;
 		player.outputStatus(out);

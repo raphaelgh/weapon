@@ -26,12 +26,14 @@ public class Player {
 		return blood > 0;
 	}
 
-	public void attack(Player playerB) {
-		playerB.beAttacked(attackValue);
+	public void attack(Player playerB, PrintStream out) {
+		playerB.beAttacked(attackValue, name+"攻击了"+playerB.name+",", out);
 	}
 	
-	private void beAttacked(int attackValue){
+	private void beAttacked(int attackValue, String info, PrintStream out){
 		blood = blood - attackValue;
+		out.println(info+name+"受到"+attackValue+"点伤害,"+
+				name+"剩余生命:"+blood);
 		status = blood <= 0 ? DEFEATED : status;
 	}
 
