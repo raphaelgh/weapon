@@ -8,12 +8,12 @@ public class Game {
 
 	Player playerA;
 	Player playerB;
-	PrintStream print;
+	PrintStream out;
 	
 	public Game(Player playerA, Player playerB, PrintStream print) {
 		this.playerA = playerA;
 		this.playerB = playerB;
-		this.print = print;
+		this.out = print;
 	}
 
 	public void start(){
@@ -24,7 +24,7 @@ public class Game {
 			}
 			playerB.attack(playerA);
 		}
-		Player defeatedPlayer = playerA.canBeAttack() ? playerB : playerA;
-		defeatedPlayer.printBeDefeated();
+		Player player = playerA.canBeAttack() ? playerB : playerA;
+		player.outputStatus(out);
 	}
 }

@@ -5,6 +5,8 @@ import com.tw.trainning.fightergame.entity.Player;
 
 public class WeaponWithPoison extends Weapon{
 	
+	private int times = 2;
+	
 	public WeaponWithPoison(String name, int value, int harmvalue, PrintStream out) {
 		super(name, value, harmvalue, out);
 	}
