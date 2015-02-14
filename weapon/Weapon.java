@@ -33,7 +33,7 @@ public class Weapon{
 	}
 	
 	public String affect(String name, String status) {
-		return status;
+		return Player.NOTHING;
 	}
 	
 }

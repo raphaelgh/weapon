@@ -100,7 +100,7 @@ public class GameTest {
 	}
 	
 	@Test
-	public void should_use_weapon_with_poison_and_affect_one_time(){
+	public void should_soldier_use_weapon_with_poison_and_affect_one_time_fight_with_person(){
 		Weapon poison = new WeaponWithPoison("优质毒箭", 10, 1);
 		//Weapon sword = new Weapon("利剑", 40);
 		Soldier playerA = new Soldier("李四",40,100,poison,20);
@@ -109,9 +109,27 @@ public class GameTest {
 		game.start();
 		verify(out).println("战士李四用优质毒箭攻击了普通人张三,张三受到50点伤害,张三中毒了,张三剩余生命:50");
 		verify(out).println("张三受到2点毒性伤害,张三剩余生命:48");
-//		verify(out).println("战士张三用利剑攻击了战士李四,李四受到50点伤害,李四剩余生命:50");
-//		verify(out).println("战士李四用优质木棒攻击了战士张三,张三受到30点伤害,张三剩余生命:40");
-//		verify(out).println("战士张三用利剑攻击了战士李四,李四受到50点伤害,李四剩余生命:0");
-//		verify(out).println("李四被打败了");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:90");
+	}
+	
+	@Test
+	public void should_soldier_use_weapon_with_poison_and_affect_one_time_and_with_random_fight_with_person(){
+		Random random = mock(Random.class);
+		when(random.nextBoolean())
+		.thenReturn(true)
+		.thenReturn(true)
+		.thenReturn(false)
+		.thenReturn(false);
+		Weapon poison = new WeaponWithPoison("优质毒箭", 10, 1, random);
+		//Weapon sword = new Weapon("利剑", 40);
+		Soldier playerA = new Soldier("李四",40,100,poison,20);
+		Player playerB = new Player("张三", 30, 100);
+		Game game = new Game(playerA, playerB, out);
+		game.start();
+		verify(out).println("战士李四用优质毒箭攻击了普通人张三,张三受到50点伤害,张三中毒了,张三剩余生命:50");
+		verify(out).println("张三受到2点毒性伤害,张三剩余生命:48");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:90");
+		verify(out).println("战士李四用优质毒箭攻击了普通人张三,张三受到50点伤害,张三剩余生命:-2");
+		verify(out).println("张三被打败了");
 	}
 }

@@ -10,6 +10,7 @@ public class Player {
 	
 	public static final String DEFEATED = "被打败了";
 	public static final String POISONED = "中毒了";
+	public static final String NOTHING = "";
 
 	protected String name;
 	protected int attackValue;
