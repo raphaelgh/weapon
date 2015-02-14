@@ -20,7 +20,7 @@ import com.tw.trainning.fightergame.weapon.WeaponWithPoison;
 public class GameTest {
 	
 	@Test
-	public void should_two_player_fight_one_by_one_and_output_result(){
+	public void should_two_player_fight_together_and_output_result(){
 		PrintStream out = mock(PrintStream.class);
 		Player playerA = new Player("李四", 20, 100);
 		Player playerB = new Player("张三", 20, 100);
