@@ -15,7 +15,7 @@ public class Weapon{
 	}
 	
 	public String attack(Player player){
-		//player.beAttackedByWeapon(attackValue);
+		player.beAffectedByWeapon(this);
 		return "ÓÃ"+name;
 	}
 	
@@ -26,6 +26,14 @@ public class Weapon{
 	@Override
 	public String toString(){
 		return "Ãû³Æ:"+name+",¹¥»÷Á¦:"+attackValue;
+	}
+
+	public int affect(String name, int blood, PrintStream out) {
+		return blood;
+	}
+	
+	public String affect(String name, String status) {
+		return status;
 	}
 	
 }

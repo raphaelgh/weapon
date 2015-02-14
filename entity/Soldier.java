@@ -22,6 +22,7 @@ public class Soldier extends Player{
 	
 	@Override
 	public void attack(Player playerB, PrintStream out) {
+		checkAffect(out);
 		playerB.beAttacked(attackValue+weapon.value(), getRole()+name+
 				weapon.attack(playerB)+"攻击了"+playerB.getRole()+playerB.name+",", out);
 	}
@@ -29,7 +30,7 @@ public class Soldier extends Player{
 	@Override
 	protected void beAttacked(int attackValue, String info, PrintStream out){
 		blood = blood - (attackValue - protect);
-		out.println(info+name+"受到"+(attackValue - protect)+"点伤害,"+
+		out.println(info+name+"受到"+(attackValue - protect)+"点伤害,"+status+
 				name+"剩余生命:"+blood);
 		status = blood <= 0 ? DEFEATED : status;
 	}

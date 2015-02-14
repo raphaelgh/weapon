@@ -13,6 +13,7 @@ import com.tw.trainning.fightergame.entity.Player;
 import com.tw.trainning.fightergame.entity.Soldier;
 import com.tw.trainning.fightergame.weapon.Weapon;
 import com.tw.trainning.fightergame.weapon.WeaponRespository;
+import com.tw.trainning.fightergame.weapon.WeaponWithPoison;
 
 
 public class GameTest {
@@ -96,5 +97,21 @@ public class GameTest {
 		WeaponRespository.listWeapon(out);
 		verify(out).print("名称:优质木棒,攻击力:20\r\n名称:利剑,攻击力:50\r\n" +
 				"名称:长矛,攻击力:40\r\n名称:砍刀,攻击力:30\r\n");
+	}
+	
+	@Test
+	public void should_use_weapon_with_poison_and_affect_one_time(){
+		Weapon poison = new WeaponWithPoison("优质毒箭", 10, 1);
+		//Weapon sword = new Weapon("利剑", 40);
+		Soldier playerA = new Soldier("李四",40,100,poison,20);
+		Player playerB = new Player("张三", 30, 100);
+		Game game = new Game(playerA, playerB, out);
+		game.start();
+		verify(out).println("战士李四用优质毒箭攻击了普通人张三,张三受到50点伤害,张三中毒了,张三剩余生命:50");
+		verify(out).println("张三受到2点毒性伤害,张三剩余生命:48");
+//		verify(out).println("战士张三用利剑攻击了战士李四,李四受到50点伤害,李四剩余生命:50");
+//		verify(out).println("战士李四用优质木棒攻击了战士张三,张三受到30点伤害,张三剩余生命:40");
+//		verify(out).println("战士张三用利剑攻击了战士李四,李四受到50点伤害,李四剩余生命:0");
+//		verify(out).println("李四被打败了");
 	}
 }
