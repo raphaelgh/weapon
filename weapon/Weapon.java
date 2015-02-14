@@ -23,4 +23,9 @@ public class Weapon{
 		return attackValue;
 	}
 	
+	@Override
+	public String toString(){
+		return "Ãû³Æ:"+name+",¹¥»÷Á¦:"+attackValue;
+	}
+	
 }

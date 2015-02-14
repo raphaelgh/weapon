@@ -3,8 +3,6 @@ package com.tw.trainning.fightergame.entity;
 import java.io.PrintStream;
 import java.util.Random;
 
-import com.tw.trainning.fightergame.weapon.NullWeapon;
-import com.tw.trainning.fightergame.weapon.Protect;
 import com.tw.trainning.fightergame.weapon.Weapon;
 
 public class Player {

@@ -11,10 +11,8 @@ import org.junit.Test;
 import com.tw.trainning.fightergame.Game;
 import com.tw.trainning.fightergame.entity.Player;
 import com.tw.trainning.fightergame.entity.Soldier;
-import com.tw.trainning.fightergame.weapon.Protect;
 import com.tw.trainning.fightergame.weapon.Weapon;
-import com.tw.trainning.fightergame.weapon.WeaponWithFreeze;
-import com.tw.trainning.fightergame.weapon.WeaponWithPoison;
+import com.tw.trainning.fightergame.weapon.WeaponRespository;
 
 
 public class GameTest {
@@ -91,5 +89,12 @@ public class GameTest {
 		verify(out).println("战士李四用优质木棒攻击了战士张三,张三受到30点伤害,张三剩余生命:40");
 		verify(out).println("战士张三用利剑攻击了战士李四,李四受到50点伤害,李四剩余生命:0");
 		verify(out).println("李四被打败了");
+	}
+	
+	@Test
+	public void should_weapon_respository_work_well(){
+		WeaponRespository.listWeapon(out);
+		verify(out).print("名称:优质木棒,攻击力:20\r\n名称:利剑,攻击力:50\r\n" +
+				"名称:长矛,攻击力:40\r\n名称:砍刀,攻击力:30\r\n");
 	}
 }
