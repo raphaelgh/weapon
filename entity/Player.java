@@ -47,11 +47,11 @@ public class Player {
 	
 	public void beAffectedByWeapon(Weapon weapon){
 		this.affectWithWeapon = weapon;
-		this.status = weapon.affect(name, status);
+		this.status = weapon.affectStatus(name, status);
 	}
 	
 	protected void checkAffect(PrintStream out) {
-		blood = affectWithWeapon.affect(name, blood, out);
+		blood = affectWithWeapon.affectBlood(name, blood, out);
 	}
 
 	public void outputStatus(PrintStream out) {

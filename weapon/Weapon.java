@@ -28,11 +28,11 @@ public class Weapon{
 		return "Ãû³Æ:"+name+",¹¥»÷Á¦:"+attackValue;
 	}
 
-	public int affect(String name, int blood, PrintStream out) {
+	public int affectBlood(String name, int blood, PrintStream out) {
 		return blood;
 	}
 	
-	public String affect(String name, String status) {
+	public String affectStatus(String name, String status) {
 		return Player.NOTHING;
 	}
 	
