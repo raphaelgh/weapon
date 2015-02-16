@@ -24,6 +24,7 @@ public class WeaponWithPoison extends Weapon {
 	
 	@Override
 	public int affectBlood(String name, int blood, String status, PrintStream out) {
+		poisonAttackValue = reset(times);
 		if(!possible && times == 0){
 			return blood;
 		}
@@ -33,6 +34,10 @@ public class WeaponWithPoison extends Weapon {
 				name+" £”‡…˙√¸:"+(blood-poisonAttackValue));
 		times--;
 		return blood-poisonAttackValue;
+	}
+	
+	private int reset(int times){
+		return (times == 0 ? 0 : poisonAttackValue);
 	}
 	
 	private int accumulate(boolean possible, String status, int current, int record){
