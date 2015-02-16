@@ -117,8 +117,6 @@ public class GameTest {
 		Random random = mock(Random.class);
 		when(random.nextBoolean())
 		.thenReturn(true)
-		.thenReturn(true)
-		.thenReturn(false)
 		.thenReturn(false);
 		Weapon poison = new WeaponWithPoison("优质毒箭", 10, 1, random);
 		//Weapon sword = new Weapon("利剑", 40);
@@ -138,8 +136,6 @@ public class GameTest {
 		Random random = mock(Random.class);
 		when(random.nextBoolean())
 		.thenReturn(true)
-		.thenReturn(true)
-		.thenReturn(false)
 		.thenReturn(false);
 		Weapon poison = new WeaponWithPoison("优质毒箭", 10, 2, random);
 		//Weapon sword = new Weapon("利剑", 40);
@@ -154,8 +150,43 @@ public class GameTest {
 		verify(out).println("张三受到2点毒性伤害,张三剩余生命:36");
 		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:80");
 		verify(out).println("战士李四用优质毒箭攻击了普通人张三,张三受到30点伤害,张三剩余生命:6");
+		//verify(out).println("张三受到2点毒性伤害,张三剩余生命:4");
 		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:70");
 		verify(out).println("战士李四用优质毒箭攻击了普通人张三,张三受到30点伤害,张三剩余生命:-24");
+		verify(out).println("张三被打败了");
+	}
+	
+	@Test
+	public void should_soldier_use_weapon_with_poison_and_effect_accumulation_fight_with_person(){
+		Random random = mock(Random.class);
+		when(random.nextBoolean())
+		.thenReturn(true)
+		.thenReturn(true)
+		.thenReturn(false)
+		.thenReturn(false);
+		Weapon poison = new WeaponWithPoison("优质毒箭", 10, 2, random);
+		//Weapon sword = new Weapon("利剑", 40);
+		Soldier playerA = new Soldier("李四",5,100,poison,20);
+		Player playerB = new Player("张三", 30, 100);
+		Game game = new Game(playerA, playerB, out);
+		game.start();
+		verify(out).println("战士李四用优质毒箭攻击了普通人张三,张三受到15点伤害,张三中毒了,张三剩余生命:85");
+		verify(out).println("张三受到2点毒性伤害,张三剩余生命:83");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:90");
+		verify(out).println("战士李四用优质毒箭攻击了普通人张三,张三受到15点伤害,张三又中毒了,张三剩余生命:68");
+		verify(out).println("张三受到4点毒性伤害,张三剩余生命:64");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:80");
+		verify(out).println("战士李四用优质毒箭攻击了普通人张三,张三受到15点伤害,张三剩余生命:49");
+		verify(out).println("张三受到4点毒性伤害,张三剩余生命:45");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:70");
+		verify(out).println("战士李四用优质毒箭攻击了普通人张三,张三受到15点伤害,张三剩余生命:30");
+		verify(out).println("张三受到4点毒性伤害,张三剩余生命:26");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:60");
+		verify(out).println("战士李四用优质毒箭攻击了普通人张三,张三受到15点伤害,张三剩余生命:11");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:50");
+		verify(out).println("战士李四用优质毒箭攻击了普通人张三,张三受到15点伤害,张三剩余生命:-4");
+//		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:40");
+//		verify(out).println("战士李四用优质毒箭攻击了普通人张三,张三受到15点伤害,张三剩余生命:-13");
 		verify(out).println("张三被打败了");
 	}
 }
