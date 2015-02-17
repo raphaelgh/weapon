@@ -9,12 +9,12 @@ public class Weapon{
 	
 	private final int attackValue; //not support upgrade
 	private final String name;     //not support rename
-	private boolean possible=false;
+	protected boolean possible=false;
 	private Random random;
 	private int specialAttackValue;
 	private final int recordAttackValue = 2;
-	private int times=0;
-	private int recordTimes;
+	protected int times=0;
+	protected int recordTimes;
 	
 	public Weapon(String name, int attackValue) {
 		this.attackValue = attackValue;
@@ -49,8 +49,8 @@ public class Weapon{
 		if(!possible && times == 0){
 			return blood;
 		}
-		times = accumulate(possible, status, times, recordTimes); //should solve the first time call
-		specialAttackValue = accumulate(possible, status, specialAttackValue, recordAttackValue);;
+		times = accumulate(possible, status, times, recordTimes);
+		specialAttackValue = accumulate(possible, status, specialAttackValue, recordAttackValue);
 		out.println(name+"受到"+specialAttackValue+"点"+this.getWeaponHarmness()+"伤害,"+
 				name+"剩余生命:"+(blood-specialAttackValue));
 		times--;
@@ -61,7 +61,7 @@ public class Weapon{
 		return (times == 0 ? 0 : specialAttackValue);
 	}
 	
-	private int accumulate(boolean possible, String status, int current, int record){
+	protected int accumulate(boolean possible, String status, int current, int record){
 		if(possible && 
 				(this.getWeaponAttribute().equals(status) || 
 						this.getWeaponAttributeAgain().equals(status))){
@@ -77,7 +77,7 @@ public class Weapon{
 		return accumulateStatus(possible, status);
 	}
 	
-	private String accumulateStatus(boolean possible, String status){
+	protected String accumulateStatus(boolean possible, String status){
 		if(this.getWeaponAttribute().equals(status) || this.getWeaponAttributeAgain().equals(status)){
 			return this.getWeaponAttributeAgain();
 		}

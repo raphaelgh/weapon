@@ -34,6 +34,11 @@ public class Player {
 
 	public void attack(Player playerB, PrintStream out) {
 		checkAffect(out);
+		if(this.playerStatus.indexOf("无法攻击")!= -1){
+			out.println(name+"冻得直哆嗦,没有击中"+playerB.name);
+			this.playerStatus = this.playerStatus.replace("无法攻击", "");
+			return;
+		}
 		playerB.beAttacked(attackValue, getRole()+name+"攻击了"+playerB.getRole()+playerB.name+",", out);
 	}
 
@@ -54,6 +59,10 @@ public class Player {
 	}
 	
 	protected void checkAffect(PrintStream out) {
+//		if(WeaponWithFreeze.ATTRIBUTE.equals(this.playerStatus)){
+//			out.println(name+"冻得直哆嗦,没有击中对方");
+//			return;
+//		}
 		blood = affectWithWeapon.affectBlood(name, blood, playerStatus, out);
 	}
 
