@@ -2,13 +2,12 @@ package com.tw.trainning.fightergame.weapon;
 
 import java.util.Random;
 
+public class WeaponWithFire extends Weapon{
 
-public class WeaponWithPoison extends Weapon {
+	private final String ATTRIBUTE = "着火了";
+	private final String HARMNESS = "烧伤";
 	
-	private final String ATTRIBUTE = "中毒了";
-	private final String HARMNESS = "毒性";
-	
-	public WeaponWithPoison(String name, int attackValue, int times, Random random) {
+	public WeaponWithFire(String name, int attackValue, int times, Random random) {
 		super(name, attackValue, times, random);
 	}
 	

@@ -1,7 +1,6 @@
 package com.tw.trainning.fightergame.entity;
 
 import java.io.PrintStream;
-import java.util.Random;
 
 import com.tw.trainning.fightergame.weapon.NULLWeapon;
 import com.tw.trainning.fightergame.weapon.Weapon;
@@ -9,8 +8,6 @@ import com.tw.trainning.fightergame.weapon.Weapon;
 public class Player {
 	
 	public static final String DEFEATED = "被打败了";
-	public static final String POISONED = "中毒了";
-	public static final String POISONEDAGAIN = "又中毒了";
 	public static final String NOTHING = "";
 
 	protected final String name;     //not support rename
