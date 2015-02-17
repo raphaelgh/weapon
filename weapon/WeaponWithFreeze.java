@@ -3,6 +3,8 @@ package com.tw.trainning.fightergame.weapon;
 import java.io.PrintStream;
 import java.util.Random;
 
+import com.tw.trainning.fightergame.entity.Player;
+
 public class WeaponWithFreeze extends Weapon{
 	
 	public static final String ATTRIBUTE = "¶³½©ÁË";
@@ -10,7 +12,7 @@ public class WeaponWithFreeze extends Weapon{
 
 	public WeaponWithFreeze(String name, int attackValue, int times,
 			Random random) {
-		super(name, attackValue, times, random);
+		super(name, attackValue, 2, random);
 	}
 	
 	@Override
@@ -40,6 +42,9 @@ public class WeaponWithFreeze extends Weapon{
 	
 	@Override
 	public String affectPlayerStatus(String status) {
+		if(times == 0 && status.indexOf("¶³½©") != -1){
+			return Player.NOTHING+",ÎÞ·¨¹¥»÷";
+		}
 		if(times % 2 == 0 && status.indexOf("¶³½©") != -1){ //freeze twice
 			return status+",ÎÞ·¨¹¥»÷";
 		}

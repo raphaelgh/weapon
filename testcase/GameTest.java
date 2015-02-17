@@ -254,8 +254,8 @@ public class GameTest {
 		.thenReturn(false)
 		.thenReturn(true)
 		.thenReturn(false);
-		Weapon poison = new WeaponWithFire("火焰剑", 5, 2, random);
-		Soldier playerA = new Soldier("李四",5,100,poison,20);
+		Weapon fire = new WeaponWithFire("火焰剑", 5, 2, random);
+		Soldier playerA = new Soldier("李四",5,100,fire,20);
 		Player playerB = new Player("张三", 30, 100);
 		Game game = new Game(playerA, playerB, out);
 		game.start();
@@ -298,9 +298,9 @@ public class GameTest {
 		when(random.nextBoolean())
 		.thenReturn(true)
 		.thenReturn(false);
-		Weapon poison = new WeaponWithFreeze("寒冰剑", 20, 2, random);
+		Weapon freeze = new WeaponWithFreeze("寒冰剑", 20, 2, random);
 		//Weapon sword = new Weapon("利剑", 40);
-		Soldier playerA = new Soldier("李四",10,100,poison,10);
+		Soldier playerA = new Soldier("李四",10,100,freeze,10);
 		Player playerB = new Player("张三", 20, 100);
 		Game game = new Game(playerA, playerB, out);
 		game.start();
@@ -313,8 +313,57 @@ public class GameTest {
 		verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到30点伤害,张三剩余生命:10");		
 		verify(out).println("张三冻得直哆嗦,没有击中李四");
 		verify(out, never()).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:70");
-//		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:70");
+		
 		verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到30点伤害,张三剩余生命:-20");
+		verify(out).println("张三被打败了");
+	}
+	
+	@Test
+	public void should_soldier_use_weapon_with_freeze_and_effect_accumulation_fight_with_person(){
+		when(random.nextBoolean())
+		.thenReturn(true)
+		.thenReturn(true)
+		.thenReturn(false)
+		.thenReturn(false)
+		.thenReturn(false)
+		.thenReturn(false)
+		.thenReturn(false);
+		Weapon freeze = new WeaponWithFreeze("寒冰剑", 5, 2, random);
+		//Weapon sword = new Weapon("利剑", 40);
+		Soldier playerA = new Soldier("李四",5,100,freeze,10);
+		Player playerB = new Player("张三", 20, 100);
+		Game game = new Game(playerA, playerB, out);
+		game.start();
+		verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到10点伤害,张三冻僵了,张三剩余生命:90");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:90");
+		
+		verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到10点伤害,张三又冻僵了,张三剩余生命:80");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:80");
+		
+		verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:70");		
+		verify(out, times(2)).println("张三冻得直哆嗦,没有击中李四");
+		//verify(out, never()).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:70");
+		
+		verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:60");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:70");
+		
+		verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:50");
+		verify(out, times(2)).println("张三冻得直哆嗦,没有击中李四");
+		//verify(out, never()).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:50");
+		
+		verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:40");		
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:60");
+		
+		verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:30");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:50");
+		
+		verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:20");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:40");
+		
+		verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:10");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:30");
+		
+		verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:0");
 		verify(out).println("张三被打败了");
 	}
 }

@@ -62,6 +62,7 @@ public class Weapon{
 	}
 	
 	protected int accumulate(boolean possible, String status, int current, int record){
+		//current = ((status.indexOf(",ÎÞ·¨¹¥»÷") != -1) ? ++current : current);
 		if(possible && 
 				(this.getWeaponAttribute().equals(status) || 
 						this.getWeaponAttributeAgain().equals(status))){
