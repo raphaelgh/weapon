@@ -9,8 +9,8 @@ public class Weapon{
 	
 	private final int attackValue; //not support upgrade
 	private final String name;     //not support rename
-	protected boolean possible=false;
-	protected Random random;
+	private boolean possible=false;
+	private Random random;
 	private int specialAttackValue;
 	private final int recordAttackValue = 2;
 	private int times=0;
@@ -19,12 +19,6 @@ public class Weapon{
 	public Weapon(String name, int attackValue) {
 		this.attackValue = attackValue;
 		this.name = name;
-	}
-	
-	protected Weapon(String name, int attackValue, Random random) {
-		this.attackValue = attackValue;
-		this.name = name;
-		this.random = random;
 	}
 	
 	protected Weapon(String name, int attackValue, int times, Random random) {
@@ -48,18 +42,6 @@ public class Weapon{
 	public String toString(){
 		return "Ãû³Æ:"+name+",¹¥»÷Á¦:"+attackValue;
 	}
-
-//	public int affectBlood(String name, int blood, String status, PrintStream out) {
-//		return blood;
-//	}
-	
-//	public String affectPlayerStatus(String status) {
-//		return status;
-//	}
-//	
-//	public String affectAttackStatus(String name, String status){
-//		return Player.NOTHING;
-//	}
 	
 	
 	public int affectBlood(String name, int blood, String status, PrintStream out) {
