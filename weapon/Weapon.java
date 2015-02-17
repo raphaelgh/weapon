@@ -62,10 +62,8 @@ public class Weapon{
 	}
 	
 	protected int accumulate(boolean possible, String status, int current, int record){
-		//current = ((status.indexOf(",ÎÞ·¨¹¥»÷") != -1) ? ++current : current);
 		if(possible && 
-				(this.getWeaponAttribute().equals(status) || 
-						this.getWeaponAttributeAgain().equals(status))){
+				accumulateFlag(status)){
 			return current+record;
 		}
 		return current;
@@ -79,10 +77,14 @@ public class Weapon{
 	}
 	
 	protected String accumulateStatus(boolean possible, String status){
-		if(this.getWeaponAttribute().equals(status) || this.getWeaponAttributeAgain().equals(status)){
+		if(accumulateFlag(status)){
 			return this.getWeaponAttributeAgain();
 		}
 		return this.getWeaponAttribute();
+	}
+	
+	private boolean accumulateFlag(String status){
+		return (status.indexOf(this.getWeaponAttribute()) != -1 || status.indexOf(this.getWeaponAttributeAgain()) != -1);
 	}
 	
 	public String affectAttackStatus(String name, String status){
@@ -102,6 +104,10 @@ public class Weapon{
 	
 	protected String getWeaponHarmness(){
 		return "";
+	}
+
+	public void printStopAttackOnce(String attackName, String beAttackedName, PrintStream out) {
+		
 	}
 	
 }

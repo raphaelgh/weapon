@@ -5,12 +5,11 @@ import java.util.Random;
 
 import com.tw.trainning.fightergame.entity.Player;
 
-public class WeaponWithFreeze extends Weapon{
-	
-	public static final String ATTRIBUTE = "¶³½©ÁË";
-	public static final String HARMNESS = "±ù¶³";
+public class WeaponWithHalo extends Weapon{
+	public static final String ATTRIBUTE = "ÔÎµ¹ÁË";
+	public static final String HARMNESS = "Ñ£ÔÎ";
 
-	public WeaponWithFreeze(String name, int attackValue, int times,
+	public WeaponWithHalo(String name, int attackValue, int times,
 			Random random) {
 		super(name, attackValue, 2, random);
 	}
@@ -42,17 +41,14 @@ public class WeaponWithFreeze extends Weapon{
 	
 	@Override
 	public String affectPlayerStatus(String status) {
-		if(times == 0 && status.indexOf("¶³½©") != -1){
-			return Player.NOTHING+",ÎÞ·¨¹¥»÷";
+		if(times == 0 && status.indexOf("ÔÎµ¹") != -1){
+			return Player.NOTHING;
 		}
-		if(times % 2 == 0 && status.indexOf("¶³½©") != -1){ //freeze twice
-			return status+",ÎÞ·¨¹¥»÷";
-		}
-		return super.affectPlayerStatus(status);
+		return super.affectPlayerStatus(status)+",ÎÞ·¨¹¥»÷";
 	}
 	
 	@Override
-	public void printStopAttackOnce(String attackName, String beAttackedName, PrintStream out) {
-		out.println(attackName+"¶³µÃÖ±¶ßàÂ,Ã»ÓÐ»÷ÖÐ"+beAttackedName);
+    public void printStopAttackOnce(String attackName, String beAttackedName, PrintStream out) {
+		out.println(attackName + "ÔÎµ¹ÁË,ÎÞ·¨¹¥»÷,Ñ£ÔÎ»¹Ê£:" + times + "ÂÖ");
 	}
 }
