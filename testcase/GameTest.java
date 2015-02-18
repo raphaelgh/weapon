@@ -526,4 +526,60 @@ public class GameTest {
 		verify(out).println("战士李四用利剑攻击了普通人张三,张三受到30点伤害,张三剩余生命:0");
 		verify(out).println("张三被打败了");
 	}
+	
+	@Test
+	public void should_soldier_use_weapon_with_bust_and_effect_accumulation_fight_with_person(){
+		when(random.nextBoolean())
+		.thenReturn(true)
+		.thenReturn(true)
+		.thenReturn(false);
+		Weapon bust = new WeaponWithBust("利剑", 20, 2, random);
+		Soldier playerA = new Soldier("李四",10,100,bust,10);
+		Player playerB = new Player("张三", 20, 100);
+		Game game = new Game(playerA, playerB, out);
+		game.start();
+		verify(out).println("战士李四用利剑攻击了普通人张三,李四发动了全力一击,张三受到70点伤害,张三剩余生命:30");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:90");
+		
+		verify(out).println("战士李四用利剑攻击了普通人张三,李四发动了全力一击,张三受到70点伤害,张三剩余生命:-40");
+		verify(out).println("张三被打败了");
+	}
+	
+	@Test
+	public void should_soldier_use_weapon_with_bust_and_effect_accumulation_twice_fight_with_person(){
+		when(random.nextBoolean())
+		.thenReturn(true)
+		.thenReturn(true)
+		.thenReturn(false)
+		.thenReturn(false)
+		.thenReturn(false)
+		.thenReturn(true)
+		.thenReturn(false);
+		Weapon bust = new WeaponWithBust("利剑", 5, 2, random);
+		Soldier playerA = new Soldier("李四",5,100,bust,10);
+		Player playerB = new Player("张三", 20, 100);
+		Game game = new Game(playerA, playerB, out);
+		game.start();
+		verify(out).println("战士李四用利剑攻击了普通人张三,李四发动了全力一击,张三受到20点伤害,张三剩余生命:80");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:90");
+		
+		verify(out).println("战士李四用利剑攻击了普通人张三,李四发动了全力一击,张三受到20点伤害,张三剩余生命:60");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:80");
+		
+		verify(out).println("战士李四用利剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:50");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:70");
+		
+		verify(out).println("战士李四用利剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:40");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:60");
+		
+		verify(out).println("战士李四用利剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:30");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:50");
+		
+		verify(out).println("战士李四用利剑攻击了普通人张三,李四发动了全力一击,张三受到20点伤害,张三剩余生命:10");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:60");
+		
+		verify(out).println("战士李四用利剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:0");
+		
+		verify(out).println("张三被打败了");
+	}
 }
