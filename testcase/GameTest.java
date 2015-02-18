@@ -469,6 +469,9 @@ public class GameTest {
 		.thenReturn(false)
 		.thenReturn(false)
 		.thenReturn(true)
+		.thenReturn(false)
+		.thenReturn(false)
+		.thenReturn(false)
 		.thenReturn(false);
 		Weapon halo = new WeaponWithHalo("ÔÎ´¸", 5, 2, random);
 		Soldier playerA = new Soldier("ÀîËÄ",5,100,halo,10);

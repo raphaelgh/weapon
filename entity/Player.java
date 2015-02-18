@@ -16,7 +16,7 @@ public class Player {
 	protected String playerStatus="";
 	protected String attackStatus = "";
 	private final String role = "∆’Õ®»À";
-	private Weapon affectWithWeapon = new NULLWeapon();
+	protected Weapon affectWithWeapon = new NULLWeapon();
 	
 	public Player(String name, int attackValue, int blood) {
 		this.name = (name != null ? name : "player");

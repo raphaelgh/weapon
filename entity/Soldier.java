@@ -23,6 +23,11 @@ public class Soldier extends Player{
 	@Override
 	public void attack(Player playerB, PrintStream out) {
 		checkAffect(out);
+		if(this.playerStatus.indexOf(",无法攻击")!= -1){
+			this.affectWithWeapon.printStopAttackOnce(name, playerB.name, out);
+			this.playerStatus = this.playerStatus.replace(",无法攻击", "");
+			return;
+		}
 		playerB.beAttacked(attackValue+weapon.value(), getRole()+name+
 				weapon.attack(playerB)+"攻击了"+playerB.getRole()+playerB.name+",", out);
 	}

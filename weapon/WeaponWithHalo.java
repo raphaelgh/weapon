@@ -41,8 +41,11 @@ public class WeaponWithHalo extends Weapon{
 	
 	@Override
 	public String affectPlayerStatus(String status) {
-		if(times == 0 && status.indexOf("‘Œµπ") != -1){
+		if(!possible && times == 0 && status.indexOf("‘Œµπ") != -1){
 			return Player.NOTHING;
+		}
+		if(!possible && status.indexOf("‘Œµπ") == -1){
+			return status;
 		}
 		return super.affectPlayerStatus(status)+",Œﬁ∑®π•ª˜";
 	}
