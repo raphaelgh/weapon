@@ -28,8 +28,8 @@ public class Soldier extends Player{
 			this.playerStatus = this.playerStatus.replace(",无法攻击", "");
 			return;
 		}
-		playerB.beAttacked(attackValue+weapon.value(), getRole()+name+
-				weapon.attack(playerB)+"攻击了"+playerB.getRole()+playerB.name+",", out);
+		playerB.beAttacked(attackValue+weapon.attack(playerB), getRole()+name+
+				weapon.name()+"攻击了"+playerB.getRole()+playerB.name+","+weapon.bust(name), out);
 	}
 	
 	@Override

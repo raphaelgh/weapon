@@ -7,10 +7,10 @@ import com.tw.trainning.fightergame.entity.Player;
 
 public class Weapon{
 	
-	private final int attackValue; //not support upgrade
+	protected final int attackValue; //not support upgrade
 	private final String name;     //not support rename
 	protected boolean possible=false;
-	private Random random;
+	protected Random random;
 	private int specialAttackValue;
 	private final int recordAttackValue = 2;
 	protected int times=0;
@@ -28,14 +28,14 @@ public class Weapon{
 		this.recordTimes = times;
 	}
 	
-	public String attack(Player player){
+	public int attack(Player player){
 		this.possible = (random != null ? random.nextBoolean() : possible);
 		player.beAffectedByWeapon(this);
-		return "”√"+name;
+		return attackValue;
 	}
 	
-	public int value(){
-		return attackValue;
+	public String name(){
+		return "”√"+name;
 	}
 	
 	@Override
@@ -108,6 +108,10 @@ public class Weapon{
 
 	public void printStopAttackOnce(String attackName, String beAttackedName, PrintStream out) {
 		
+	}
+
+	public String bust(String name) {
+		return "";
 	}
 	
 }

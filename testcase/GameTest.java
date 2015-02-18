@@ -13,6 +13,7 @@ import com.tw.trainning.fightergame.entity.Player;
 import com.tw.trainning.fightergame.entity.Soldier;
 import com.tw.trainning.fightergame.weapon.Weapon;
 import com.tw.trainning.fightergame.weapon.WeaponRespository;
+import com.tw.trainning.fightergame.weapon.WeaponWithBust;
 import com.tw.trainning.fightergame.weapon.WeaponWithFire;
 import com.tw.trainning.fightergame.weapon.WeaponWithFreeze;
 import com.tw.trainning.fightergame.weapon.WeaponWithHalo;
@@ -506,6 +507,23 @@ public class GameTest {
 		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:70");
 		
 		verify(out).println("战士李四用晕锤攻击了普通人张三,张三受到10点伤害,张三剩余生命:0");		
+		verify(out).println("张三被打败了");
+	}
+	
+	@Test
+	public void should_soldier_use_weapon_with_bust_and_affect_one_time_and_with_random_fight_with_person(){
+		when(random.nextBoolean())
+		.thenReturn(true)
+		.thenReturn(false);
+		Weapon bust = new WeaponWithBust("利剑", 20, 2, random);
+		Soldier playerA = new Soldier("李四",10,100,bust,10);
+		Player playerB = new Player("张三", 20, 100);
+		Game game = new Game(playerA, playerB, out);
+		game.start();
+		verify(out).println("战士李四用利剑攻击了普通人张三,李四发动了全力一击,张三受到70点伤害,张三剩余生命:30");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:90");
+		
+		verify(out).println("战士李四用利剑攻击了普通人张三,张三受到30点伤害,张三剩余生命:0");
 		verify(out).println("张三被打败了");
 	}
 }
