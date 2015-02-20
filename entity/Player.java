@@ -66,6 +66,10 @@ public class Player {
 		out.println(name + playerStatus);
 	}
 	
+	public String playerStatus(){
+		return this.playerStatus;
+	}
+	
 	
 	
 }

@@ -35,7 +35,7 @@ public class WeaponWithHalo extends Weapon{
 			return blood;
 		}
 		times--;
-		times = accumulate(possible, status, times, recordTimes);
+		//times = accumulate(possible, status, times, recordTimes);
 		return blood;
 	}
 	
