@@ -30,9 +30,9 @@ public class Weapon{
 	
 	public int attack(Player player){
 		this.possible = (random != null ? random.nextBoolean() : possible);
-		player.beAffectedByWeapon(this);
-		times = accumulate(possible, player.playerStatus(), times, recordTimes);
-		specialAttackValue = accumulate(possible, player.playerStatus(), specialAttackValue, recordAttackValue);
+		String status = player.beAffectedByWeapon(this);
+		times = accumulate(possible, status, times, recordTimes);
+		specialAttackValue = accumulate(possible, status, specialAttackValue, recordAttackValue);
 		return attackValue;
 	}
 	
@@ -51,8 +51,6 @@ public class Weapon{
 		if(times == 0){
 			return blood;
 		}
-//		times = accumulate(possible, status, times, recordTimes);
-//		specialAttackValue = accumulate(possible, status, specialAttackValue, recordAttackValue);
 		out.println(name+"受到"+specialAttackValue+"点"+this.getWeaponHarmness()+"伤害,"+
 				name+"剩余生命:"+(blood-specialAttackValue));
 		times--;

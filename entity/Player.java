@@ -49,13 +49,14 @@ public class Player {
 		playerStatus = blood <= 0 ? DEFEATED : playerStatus;
 	}
 	
-	public void beAffectedByWeapon(Weapon weapon){
+	public String beAffectedByWeapon(Weapon weapon){
 		this.affectWithWeapon = weapon;
 		this.playerStatus = weapon.affectPlayerStatus(playerStatus);
 		if(attackStatus.indexOf(name) != -1){
 			attackStatus = attackStatus.substring(name.length(), attackStatus.length() -1);
 		}
 		this.attackStatus = weapon.affectAttackStatus(name, attackStatus);
+		return playerStatus;
 	}
 	
 	protected void checkAffect(PrintStream out) {
@@ -65,11 +66,5 @@ public class Player {
 	public void outputStatus(PrintStream out) {
 		out.println(name + playerStatus);
 	}
-	
-	public String playerStatus(){
-		return this.playerStatus;
-	}
-	
-	
 	
 }

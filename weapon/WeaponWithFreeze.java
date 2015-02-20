@@ -32,11 +32,7 @@ public class WeaponWithFreeze extends Weapon{
 	
 	@Override
 	public int affectBlood(String name, int blood, String status, PrintStream out) {
-		if(!possible && times == 0){
-			return blood;
-		}
-		times--;
-		//times = accumulate(possible, status, times, recordTimes);
+		times = (times == 0 ? 0 : --times);
 		return blood;
 	}
 	

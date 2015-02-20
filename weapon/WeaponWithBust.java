@@ -17,7 +17,8 @@ public class WeaponWithBust extends Weapon{
 	@Override
 	public int attack(Player player){
 		this.possible = (random != null ? random.nextBoolean() : possible);
-		player.beAffectedByWeapon(this);
+		String status = player.beAffectedByWeapon(this);
+		times = accumulate(possible, status, times, recordTimes);
 		if(possible || times != 0){
 			return attackValue*3;
 		}
@@ -39,11 +40,7 @@ public class WeaponWithBust extends Weapon{
 	
 	@Override
 	public int affectBlood(String name, int blood, String status, PrintStream out) {
-		if(!possible && times == 0){
-			return blood;
-		}
-		times = accumulate(possible, status, times, recordTimes);
-		times--;
+		times = (times == 0 ? 0 : --times);
 		return blood;
 	}
 	
