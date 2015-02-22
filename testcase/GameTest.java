@@ -638,10 +638,10 @@ public class GameTest {
 		.thenReturn(false)
 		.thenReturn(false);
 		
-		Weapon poison = new WeaponWithFire("火焰剑", 15, 3, fireRandom);
-		Weapon halo = new WeaponWithFreeze("冰刀", 20, 2, freezeRandom);
-		Soldier playerA = new Soldier("李四",10,100,poison,10);
-		Soldier playerB = new Soldier("张三", 20, 100, halo, 10);
+		Weapon fire = new WeaponWithFire("火焰剑", 15, 3, fireRandom);
+		Weapon freeze = new WeaponWithFreeze("冰刀", 20, 2, freezeRandom);
+		Soldier playerA = new Soldier("李四",10,100,fire,10);
+		Soldier playerB = new Soldier("张三", 20, 100, freeze, 10);
 		Game game = new Game(playerA, playerB, out);
 		game.start();
 		verify(out).println("战士李四用火焰剑攻击了战士张三,张三受到15点伤害,张三着火了,张三剩余生命:85");
@@ -654,6 +654,49 @@ public class GameTest {
 		
 		verify(out).println("战士李四用火焰剑攻击了战士张三,张三受到15点伤害,张三剩余生命:51");
 		verify(out).println("张三受到2点烧伤伤害,张三剩余生命:49");
+		verify(out).println("战士张三用冰刀攻击了战士李四,李四受到30点伤害,李四剩余生命:10");
+		
+		verify(out).println("李四冻得直哆嗦,没有击中张三");
+		verify(out).println("战士张三用冰刀攻击了战士李四,李四受到30点伤害,李四剩余生命:-20");
+		
+		verify(out).println("李四被打败了");
+	}
+	
+	@Test
+	public void should_soldier_use_weapon_with_halo_fight_with_soldier_use_weapon_with_freeze(){
+		Random haloRandom = mock(Random.class);
+		when(haloRandom.nextBoolean())
+		.thenReturn(true)
+		.thenReturn(false)
+		.thenReturn(false)
+		.thenReturn(false);
+		
+		Random freezeRandom = mock(Random.class);
+		when(freezeRandom.nextBoolean())
+		.thenReturn(true)
+		.thenReturn(false)
+		.thenReturn(false)
+		.thenReturn(false);
+		
+		Weapon halo = new WeaponWithHalo("晕锤", 15, 3, haloRandom);
+		Weapon freeze = new WeaponWithFreeze("冰刀", 20, 2, freezeRandom);
+		Soldier playerA = new Soldier("李四",10,100,halo,10);
+		Soldier playerB = new Soldier("张三", 20, 100, freeze, 10);
+		Game game = new Game(playerA, playerB, out);
+		game.start();
+		verify(out).println("战士李四用晕锤攻击了战士张三,张三受到15点伤害,张三晕倒了,张三剩余生命:85");
+		verify(out).println("张三晕倒了,无法攻击,眩晕还剩:1轮");
+		
+		verify(out).println("战士李四用晕锤攻击了战士张三,张三受到15点伤害,张三剩余生命:70");
+		verify(out).println("张三晕倒了,无法攻击,眩晕还剩:0轮");
+
+		verify(out).println("战士李四用晕锤攻击了战士张三,张三受到15点伤害,张三剩余生命:55");
+		verify(out).println("战士张三用冰刀攻击了战士李四,李四受到30点伤害,李四冻僵了,李四剩余生命:70");
+		
+		verify(out).println("战士李四用晕锤攻击了战士张三,张三受到15点伤害,张三剩余生命:40");
+		verify(out).println("战士张三用冰刀攻击了战士李四,李四受到30点伤害,李四剩余生命:40");
+		
+		verify(out).println("战士李四用晕锤攻击了战士张三,张三受到15点伤害,张三剩余生命:25");
 		verify(out).println("战士张三用冰刀攻击了战士李四,李四受到30点伤害,李四剩余生命:10");
 		
 		verify(out).println("李四冻得直哆嗦,没有击中张三");
