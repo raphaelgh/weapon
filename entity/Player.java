@@ -7,6 +7,8 @@ import com.tw.trainning.fightergame.weapon.Weapon;
 
 public class Player {
 	
+	//public static enum STATE{DEFEAT, FREEZE, FIRE, POISON, HALO, CANNOTATTACK, NORMAL};
+	
 	public static final String DEFEATED = "±ª¥Ú∞‹¡À";
 	public static final String NOTHING = "";
 
@@ -57,7 +59,7 @@ public class Player {
 		}
 		this.attackStatus = weapon.affectAttackStatus(name, attackStatus);
 		return playerStatus;
-	}
+	}	
 	
 	protected void checkAffect(PrintStream out) {
 		blood = affectWithWeapon.affectBlood(name, blood, playerStatus, out);
