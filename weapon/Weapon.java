@@ -4,6 +4,7 @@ import java.io.PrintStream;
 import java.util.Random;
 
 import com.tw.trainning.fightergame.entity.Player;
+import com.tw.trainning.fightergame.weapon.attribute.Attribute;
 
 public class Weapon{
 	
@@ -113,5 +114,4 @@ public class Weapon{
 	public String bust(String name) {
 		return "";
 	}
-	
 }

@@ -1,6 +1,8 @@
 package com.tw.trainning.fightergame.weapon;
 
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import com.tw.trainning.fightergame.entity.Player;
@@ -12,6 +14,7 @@ public class RefactorWeapon extends Weapon{
 	protected boolean possible=false;
 	protected Random random;
 	private Attribute extraHarm;
+	private List<Attribute> attrList = new ArrayList<Attribute>();
 	
 	public RefactorWeapon(String name, int attackValue) {
 		super(name, attackValue);
@@ -25,14 +28,27 @@ public class RefactorWeapon extends Weapon{
 		this.name = name;
 		this.random = random;
 		this.extraHarm = attr;
+		attrList.add(attr);
 	}
 	
-	public int attack(Player player){
-		this.possible = (random != null ? random.nextBoolean() : possible);
+	public int attack(Player player){		
+		Attribute selected = selectAttribute(random);
+		extraHarm = (selected == null ? extraHarm : selected);
+		this.possible = (selected == null ? false : true);	
 		extraHarm.setPossible(possible);
 		String status = player.beAffectedByWeapon(this);
 		extraHarm.accumulate(status);
 		return attackValue;
+	}
+	
+	private Attribute selectAttribute(Random random){
+		int index = random.nextInt(9);
+		try{
+			return attrList.get(index);
+		}
+		catch(Exception e){
+			return null;
+		}
 	}
 	
 	public String name(){
@@ -64,5 +80,10 @@ public class RefactorWeapon extends Weapon{
 
 	public String bust(String name) {
 		return extraHarm.bust(name);
+	}
+	
+
+	public void addAttribute(Attribute freeze) {
+		attrList.add(freeze);
 	}
 }
