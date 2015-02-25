@@ -152,7 +152,7 @@ public class RefactorTest {
 	}
 	
 	@Test
-	public void should_weapon_first_fire_and_freeze(){
+	public void should_weapon_first_fire_and_freeze_when_fire_finish(){
 		when(random.nextInt(9))
 		.thenReturn(0)
 		.thenReturn(2)
@@ -202,6 +202,56 @@ public class RefactorTest {
 		
 		verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:-6");
 		verify(out).println("张三被打败了");
-
+	}
+	
+	@Test
+	public void should_weapon_first_fire_and_freeze_when_fire_not_finish(){
+		when(random.nextInt(9))
+		.thenReturn(0)
+		.thenReturn(1)
+		.thenReturn(3)
+		.thenReturn(2)
+		.thenReturn(2)
+		.thenReturn(3)
+		.thenReturn(4);
+		Attribute freeze = new Freeze("寒冰", 2, true);
+		Attribute fire = new Fire("火焰", 3, true);
+		RefactorWeapon firePlusFreezeWeapon = new RefactorWeapon("烈焰寒冰剑", 5, fire, random);
+		firePlusFreezeWeapon.addAttribute(freeze);
+		Soldier playerA = new Soldier("李四",5,100,firePlusFreezeWeapon,10);
+		Player playerB = new Player("张三", 20, 100);
+		Game game = new Game(playerA, playerB, out);
+		game.start();
+		
+		verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三烧伤了,张三剩余生命:90");
+		verify(out).println("张三受到2点烧伤伤害,张三剩余生命:88");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:90");
+		
+		verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三冻僵了,张三剩余生命:78");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:80");
+		
+		verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:68");		
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:70");
+		
+		verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:58");
+		verify(out).println("张三冻得直哆嗦,没有击中李四");
+		
+		verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:48");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:60");		
+		
+		verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:38");		
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:50");
+		
+		verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:28");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:40");
+		
+		verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:18");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:30");
+		
+		verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:8");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:20");
+		
+		verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:-2");
+		verify(out).println("张三被打败了");
 	}
 }
