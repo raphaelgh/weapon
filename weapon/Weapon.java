@@ -114,12 +114,12 @@ public class Weapon{
 	public String bust(String name) {
 		return "";
 	}
-
-	public void accumulate(String status, Weapon affectWithWeapon) {		
-		
-	}
 	
-	public Attribute accumulate(String status, Attribute another) {
+	protected Attribute accumulate(String status, Attribute another) {
 		return another;
+	}
+
+	public void accumulate(String playerStatus, Weapon affectWithWeapon) {
+				
 	}
 }

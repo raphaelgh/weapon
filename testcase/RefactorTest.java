@@ -288,7 +288,6 @@ public class RefactorTest {
 		
 		verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:44");
 		verify(out).println("张三受到7点烧伤伤害,张三剩余生命:37");
-		//verify(out).println("张三冻得直哆嗦,没有击中李四");
 		
 		verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:27");
 		verify(out).println("张三受到7点烧伤伤害,张三剩余生命:20");
@@ -298,15 +297,6 @@ public class RefactorTest {
 		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:50");
 		
 		verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:0");
-//		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:40");
-//		
-//		verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:18");
-//		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:30");
-//		
-//		verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:8");
-//		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:20");
-//		
-//		verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:-2");
 		verify(out).println("张三被打败了");
 	}
 }
