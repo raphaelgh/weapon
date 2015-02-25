@@ -1,6 +1,7 @@
 package com.tw.trainning.fightergame.weapon.attribute;
 
 import java.io.PrintStream;
+import java.lang.reflect.Constructor;
 
 import com.tw.trainning.fightergame.entity.Player;
 
@@ -8,7 +9,7 @@ public class Base implements Attribute{
 	private final String name;     //not support rename
 	protected boolean possible=false;
 	private int specialAttackValue;
-	private final int recordAttackValue = 2;
+	private int recordAttackValue = 2 ;
 	protected int times=0;
 	protected int recordTimes;
 	
@@ -18,9 +19,29 @@ public class Base implements Attribute{
 		this.recordTimes = times;
 	}
 	
+	protected Base(String name, int times, int specialAttackValue, boolean possible) {
+		this.name = name;
+		this.possible = possible;
+		this.recordTimes = times;
+		this.recordAttackValue = specialAttackValue;
+	}
+	
 	public void accumulate(String status){
 		times = accumulate(possible, status, times, recordTimes);
 		specialAttackValue = accumulate(possible, status, specialAttackValue, recordAttackValue);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Attribute accumulate(String status, Attribute another){
+		boolean possibility = this.getClass().equals(another.getClass());
+		int times = another.accumulateTimes(possibility, status, this.times);
+		int specialAttackValue = another.accumulateAttackValue(possibility, status, this.recordAttackValue);
+		try {
+			Constructor<Attribute> constructor = (Constructor<Attribute>) this.getClass().getDeclaredConstructor(String.class, int.class, int.class, boolean.class);
+			return constructor.newInstance(this.name, times, specialAttackValue, true);
+		} catch (Exception e) {
+			return this;
+		} 
 	}
 	
 	public int affectBlood(String name, int blood, String status, PrintStream out) {
@@ -44,6 +65,22 @@ public class Base implements Attribute{
 			return current+record;
 		}
 		return current;
+	}
+	
+	public int accumulateTimes(boolean possible, String status, int record){
+		if(possible && 
+				accumulateFlag(status)){
+			return this.recordTimes+record;
+		}
+		return record;
+	}
+	
+	public int accumulateAttackValue(boolean possible, String status, int record){
+		if(possible && 
+				accumulateFlag(status)){
+			return this.recordAttackValue+record;
+		}
+		return record;
 	}
 	
 	public String affectPlayerStatus(String status) {

@@ -47,4 +47,20 @@ public class NULLHarm implements Attribute{
 		
 	}
 
+	@Override
+	public Attribute accumulate(String status, Attribute another) {
+		return another;		
+	}
+
+	@Override
+	public int accumulateAttackValue(boolean possible, String status,
+			int recordAttackValue) {
+		return recordAttackValue;
+	}
+
+	@Override
+	public int accumulateTimes(boolean possible, String status, int recordTimes) {
+		return recordTimes;
+	}
+
 }

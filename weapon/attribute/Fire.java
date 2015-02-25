@@ -8,6 +8,10 @@ public class Fire extends Base {
 	public Fire(String name, int times, boolean possible) {
 		super(name, times, possible);
 	}
+	
+	public Fire(String name, int times, int specialAttackValue, boolean possible) {
+		super(name, times, specialAttackValue, possible);
+	}
 
 	@Override
 	protected String getWeaponAttribute(){

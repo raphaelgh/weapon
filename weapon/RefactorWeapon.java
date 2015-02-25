@@ -7,13 +7,14 @@ import java.util.Random;
 
 import com.tw.trainning.fightergame.entity.Player;
 import com.tw.trainning.fightergame.weapon.attribute.Attribute;
+import com.tw.trainning.fightergame.weapon.attribute.NULLHarm;
 
 public class RefactorWeapon extends Weapon{
 	protected final int attackValue; //not support upgrade
 	private final String name;     //not support rename
 	protected boolean possible=false;
 	protected Random random;
-	private Attribute extraHarm;
+	private Attribute extraHarm = NULLHarm.getNULLHarm();
 	private List<Attribute> attrList = new ArrayList<Attribute>();
 	
 	public RefactorWeapon(String name, int attackValue) {
@@ -33,7 +34,8 @@ public class RefactorWeapon extends Weapon{
 	
 	public int attack(Player player){		
 		Attribute selected = selectAttribute(random);
-		extraHarm = (selected == null ? extraHarm : selected);
+		extraHarm = player.accumulateWeaponHarm(selected);
+		//extraHarm = (selected == null ? extraHarm : selected);
 		this.possible = (selected == null ? false : true);	
 		extraHarm.setPossible(possible);
 		String status = player.beAffectedByWeapon(this);
@@ -85,5 +87,16 @@ public class RefactorWeapon extends Weapon{
 
 	public void addAttribute(Attribute freeze) {
 		attrList.add(freeze);
+	}
+	
+	@Override
+	public void accumulate(String status, Weapon affectWithWeapon) {		
+		this.extraHarm = accumulate(status, ((RefactorWeapon)affectWithWeapon).extraHarm);
+	}
+
+	@Override
+	public Attribute accumulate(String status, Attribute another) {
+		boolean possibility = (another == null ? false : (NULLHarm.class.equals(this.extraHarm.getClass()) || this.extraHarm.getClass().equals(another.getClass())));
+		return (possibility ? this.extraHarm.accumulate(status, another) : (another == null ? this.extraHarm : another));
 	}
 }

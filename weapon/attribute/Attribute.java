@@ -10,4 +10,7 @@ public interface Attribute {
 	public void printStopAttackOnce(String attackName, String beAttackedName, PrintStream out);
 	public String bust(String name);
 	public void setPossible(boolean possible);
+	public int accumulateTimes(boolean possible, String status, int recordTimes);
+	public int accumulateAttackValue(boolean possible, String status, int recordAttackValue);
+	public Attribute accumulate(String status, Attribute another);
 }

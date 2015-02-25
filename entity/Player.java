@@ -4,6 +4,7 @@ import java.io.PrintStream;
 
 import com.tw.trainning.fightergame.weapon.NULLWeapon;
 import com.tw.trainning.fightergame.weapon.Weapon;
+import com.tw.trainning.fightergame.weapon.attribute.Attribute;
 
 public class Player {
 	
@@ -52,6 +53,7 @@ public class Player {
 	}
 	
 	public String beAffectedByWeapon(Weapon weapon){
+		//weapon.accumulate(this.playerStatus, this.affectWithWeapon);
 		this.affectWithWeapon = weapon;
 		this.playerStatus = weapon.affectPlayerStatus(playerStatus);
 		if(attackStatus.indexOf(name) != -1){
@@ -67,6 +69,10 @@ public class Player {
 
 	public void outputStatus(PrintStream out) {
 		out.println(name + playerStatus);
+	}
+
+	public Attribute accumulateWeaponHarm(Attribute selected) {
+		return this.affectWithWeapon.accumulate(playerStatus, selected);		
 	}
 	
 }
