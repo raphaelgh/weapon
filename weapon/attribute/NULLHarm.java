@@ -14,7 +14,7 @@ public class NULLHarm implements Attribute{
 	}
 
 	@Override
-	public String affectAttackStatus(String name, String status) {
+	public String getAttributeName(String status) {
 		return "";
 	}
 

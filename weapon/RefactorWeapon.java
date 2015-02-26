@@ -66,9 +66,9 @@ public class RefactorWeapon extends Weapon{
 	}
 	
 	
-	public String affectAttackStatus(String name, String status){
-		return extraHarm.affectAttackStatus(name, status);
-	}
+//	public String affectAttackStatus(String name, String status){
+//		return extraHarm.getAttributeName(name, status);
+//	}
 
 	public void printStopAttackOnce(String attackName, String beAttackedName, PrintStream out) {
 		extraHarm.printStopAttackOnce(attackName, beAttackedName, out);
@@ -96,5 +96,10 @@ public class RefactorWeapon extends Weapon{
 		boolean isNextHarmNULL = NULLHarm.class.equals(another.getClass());
 		boolean possibility = !isNextHarmNULL && ((NULLHarm.class.equals(this.extraHarm.getClass()) || this.extraHarm.getClass().equals(another.getClass())));
 		return (possibility ? this.extraHarm.accumulate(another) : (isNextHarmNULL ? this.extraHarm : another));
+	}
+	
+	@Override
+	public String getWeaponAttributeName(String playerStatus) {
+		return this.extraHarm.getAttributeName(playerStatus);
 	}
 }

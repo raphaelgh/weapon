@@ -80,11 +80,12 @@ public class Base implements Attribute{
 		return (status.indexOf(this.getWeaponAttribute()) != -1 || status.indexOf(this.getWeaponAttributeAgain()) != -1);
 	}
 	
-	public String affectAttackStatus(String name, String status){
-		if(!possible){
-			return Player.NOTHING;
-		}
-		return name+accumulateStatus(possible, status)+",";
+	public String getAttributeName(String status){
+		return (possible ? this.getWeaponAttribute() : "");
+//		if(!possible){
+//			return Player.NOTHING;
+//		}
+//		return accumulateStatus(possible, status);
 	}
 	
 	protected String getWeaponAttribute(){

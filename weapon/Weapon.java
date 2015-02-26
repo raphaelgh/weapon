@@ -126,4 +126,8 @@ public class Weapon{
 	public void accumulate(Weapon affectWithWeapon) {
 		
 	}
+
+	public String getWeaponAttributeName(String playerStatus) {
+		return playerStatus;
+	}
 }
