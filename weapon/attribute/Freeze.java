@@ -13,6 +13,10 @@ public class Freeze extends Base{
 		super(name, times, possible);
 	}
 	
+	public Freeze(String name, int times, int specialAttackValue, boolean possible){
+		super(name, times, specialAttackValue, possible);
+	}
+	
 	@Override
 	protected String getWeaponAttribute(){
 		return ATTRIBUTE;

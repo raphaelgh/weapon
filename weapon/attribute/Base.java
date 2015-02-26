@@ -8,7 +8,7 @@ import com.tw.trainning.fightergame.entity.Player;
 public class Base implements Attribute{
 	private final String name;     //not support rename
 	protected boolean possible=false;
-	private int specialAttackValue;
+	private int specialAttackValue = 2;
 	private int recordAttackValue = 2 ;
 	protected int times=0;
 	protected int recordTimes;
@@ -16,14 +16,16 @@ public class Base implements Attribute{
 	protected Base(String name, int times, boolean possible) {
 		this.name = name;
 		this.possible = possible;
+		this.times = times;
 		this.recordTimes = times;
 	}
 	
 	protected Base(String name, int times, int specialAttackValue, boolean possible) {
 		this.name = name;
 		this.possible = possible;
+		this.times = times;
 		this.recordTimes = times;
-		this.recordAttackValue = specialAttackValue;
+		this.specialAttackValue = specialAttackValue;
 	}
 	
 	public void accumulate(String status){
@@ -78,7 +80,7 @@ public class Base implements Attribute{
 	public int accumulateAttackValue(boolean possible, String status, int record){
 		if(possible && 
 				accumulateFlag(status)){
-			return this.recordAttackValue+record;
+			return this.specialAttackValue+record;
 		}
 		return record;
 	}

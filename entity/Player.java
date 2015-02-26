@@ -69,9 +69,4 @@ public class Player {
 	public void outputStatus(PrintStream out) {
 		out.println(name + playerStatus);
 	}
-
-//	public Attribute accumulateWeaponHarm(Attribute selected) {
-//		return this.affectWithWeapon.accumulate(playerStatus, selected);		
-//	}
-	
 }

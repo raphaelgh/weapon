@@ -33,13 +33,8 @@ public class RefactorWeapon extends Weapon{
 	}
 	
 	public int attack(Player player){		
-//		Attribute selected = selectAttribute(random);
-//		extraHarm = player.accumulateWeaponHarm(selected);
-//		extraHarm = (selected == null ? extraHarm : selected);
-//		this.possible = (selected == null ? false : true);	
-//		extraHarm.setPossible(possible);
-		String status = player.beAffectedByWeapon(this);
-		extraHarm.accumulate(status);
+		player.beAffectedByWeapon(this);
+		//extraHarm.accumulate(status);
 		return attackValue;
 	}
 	
@@ -49,7 +44,7 @@ public class RefactorWeapon extends Weapon{
 			return attrList.get(index);
 		}
 		catch(Exception e){
-			return null;
+			return NULLHarm.getNULLHarm();
 		}
 	}
 	
@@ -93,13 +88,14 @@ public class RefactorWeapon extends Weapon{
 	public void accumulate(String playerStatus, Weapon affectWithWeapon) {
 		Attribute selected = selectAttribute(random);
 		this.extraHarm = affectWithWeapon.accumulate(playerStatus, selected);
-		this.possible = (selected == null ? false : true);	
+		this.possible = !NULLHarm.class.equals(selected.getClass());	
 		extraHarm.setPossible(possible);
 	}
 
 	@Override
 	protected Attribute accumulate(String status, Attribute another) {
-		boolean possibility = (another == null ? false : (NULLHarm.class.equals(this.extraHarm.getClass()) || this.extraHarm.getClass().equals(another.getClass())));
-		return (possibility ? this.extraHarm.accumulate(status, another) : (another == null ? this.extraHarm : another));
+		boolean isNextHarmNULL = NULLHarm.class.equals(another.getClass());
+		boolean possibility = !isNextHarmNULL && ((NULLHarm.class.equals(this.extraHarm.getClass()) || this.extraHarm.getClass().equals(another.getClass())));
+		return (possibility ? this.extraHarm.accumulate(status, another) : (isNextHarmNULL ? this.extraHarm : another));
 	}
 }
