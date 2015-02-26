@@ -49,12 +49,12 @@ public class NULLHarm implements Attribute{
 	}
 
 	@Override
-	public int accumulateAttackValue(boolean possible, int recordAttackValue) {
+	public int accumulateAttackValue(int recordAttackValue) {
 		return recordAttackValue;
 	}
 
 	@Override
-	public int accumulateTimes(boolean possible, int recordTimes) {
+	public int accumulateTimes(int recordTimes) {
 		return recordTimes;
 	}
 

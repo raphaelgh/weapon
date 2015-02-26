@@ -29,9 +29,8 @@ public class Base implements Attribute{
 	
 	@SuppressWarnings("unchecked")
 	public Attribute accumulate(Attribute another){
-		boolean possibility = this.getClass().equals(another.getClass());
-		int times = another.accumulateTimes(possibility, this.times);
-		int specialAttackValue = another.accumulateAttackValue(possibility, this.specialAttackValue);
+		int times = another.accumulateTimes(this.times);
+		int specialAttackValue = another.accumulateAttackValue(this.specialAttackValue);
 		try {
 			Constructor<Attribute> constructor = (Constructor<Attribute>) this.getClass().getDeclaredConstructor(String.class, int.class, int.class, boolean.class);
 			return constructor.newInstance(this.name, times, specialAttackValue, true);
@@ -55,12 +54,12 @@ public class Base implements Attribute{
 		return (times == 0 ? 0 : specialAttackValue);
 	}
 	
-	public int accumulateTimes(boolean possible, int record){
-		return (possible ? this.recordTimes+record : record);
+	public int accumulateTimes(int record){
+		return this.recordTimes+record;
 	}
 	
-	public int accumulateAttackValue(boolean possible, int record){
-		return (possible ? this.specialAttackValue+record : record);
+	public int accumulateAttackValue(int record){
+		return this.specialAttackValue+record;
 	}
 	
 	public String affectPlayerStatus(String status) {
