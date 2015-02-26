@@ -1,6 +1,6 @@
 package com.tw.trainning.fightergame.weapon;
 
-public class NULLWeapon extends RefactorWeapon{
+public class NULLWeapon extends Weapon{
 	
 //	private Attribute extraHarm = NULLHarm.getNULLHarm();
 //	private List<Attribute> attrList = new ArrayList<Attribute>();

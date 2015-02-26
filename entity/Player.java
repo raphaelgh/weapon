@@ -56,10 +56,6 @@ public class Player {
 		weapon.accumulate(this.affectWithWeapon);
 		this.affectWithWeapon = weapon;
 		this.playerStatus = weapon.affectPlayerStatus(playerStatus);
-//		if(attackStatus.indexOf(name) != -1){
-//			attackStatus = attackStatus.substring(name.length(), attackStatus.length() -1);
-//		}
-//		this.attackStatus = weapon.affectAttackStatus(name, attackStatus);
 		return playerStatus;
 	}	
 	

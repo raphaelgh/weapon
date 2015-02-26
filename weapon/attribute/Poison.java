@@ -1,14 +1,13 @@
 package com.tw.trainning.fightergame.weapon.attribute;
 
-public class Fire extends Attribute {
-
-	private final String ATTRIBUTE = "烧伤了";
+public class Poison extends Attribute{
+	private final String ATTRIBUTE = "中毒了";
 	
-	public Fire(String name, int times) {
+	public Poison(String name, int times) {
 		super(name, times);
 	}
 	
-	public Fire(String name, int times, int specialAttackValue) {
+	public Poison(String name, int times, int specialAttackValue) {
 		super(name, times, specialAttackValue);
 	}
 
@@ -21,5 +20,4 @@ public class Fire extends Attribute {
 	protected String getWeaponAttributeAgain(){
 		return "又"+ATTRIBUTE;
 	}
-
 }

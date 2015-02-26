@@ -6,15 +6,14 @@ import com.tw.trainning.fightergame.entity.Player;
 
 public class Freeze extends Attribute{
 	
-	public static final String ATTRIBUTE = "∂≥Ω©¡À";
-	public static final String HARMNESS = "±˘∂≥";
+	private static final String ATTRIBUTE = "∂≥Ω©¡À";
 
-	public Freeze(String name, int times, boolean possible) {
-		super(name, times, possible);
+	public Freeze(String name, int times) {
+		super(name, times);
 	}
 	
-	public Freeze(String name, int times, int specialAttackValue, boolean possible){
-		super(name, times, specialAttackValue, possible);
+	public Freeze(String name, int times, int specialAttackValue){
+		super(name, times, specialAttackValue);
 	}
 	
 	@Override
@@ -25,11 +24,6 @@ public class Freeze extends Attribute{
 	@Override
 	protected String getWeaponAttributeAgain(){
 		return "”÷"+ATTRIBUTE;
-	}
-	
-	@Override
-	protected String getWeaponHarmness(){
-		return HARMNESS;
 	}
 	
 	@Override

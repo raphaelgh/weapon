@@ -5,7 +5,7 @@ import java.io.PrintStream;
 public class NULLAttribute extends Attribute{
 	
 	private NULLAttribute(){
-		super("", 0, false);
+		super("", 0);
 	}
 	
 	private static NULLAttribute instance = new NULLAttribute();

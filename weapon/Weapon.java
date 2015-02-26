@@ -1,40 +1,50 @@
 package com.tw.trainning.fightergame.weapon;
 
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import com.tw.trainning.fightergame.entity.Player;
 import com.tw.trainning.fightergame.weapon.attribute.Attribute;
+import com.tw.trainning.fightergame.weapon.attribute.Bust;
+import com.tw.trainning.fightergame.weapon.attribute.NULLAttribute;
 
 public class Weapon{
-	
-	protected final int attackValue; //not support upgrade
+	protected int attackValue; //not support upgrade
 	private final String name;     //not support rename
 	protected boolean possible=false;
 	protected Random random;
-	private int specialAttackValue;
-	private final int recordAttackValue = 2;
-	protected int times=0;
-	protected int recordTimes;
+	private Attribute extraHarm = NULLAttribute.getInstance();
+	private List<Attribute> attrList = new ArrayList<Attribute>();
 	
 	public Weapon(String name, int attackValue) {
 		this.attackValue = attackValue;
 		this.name = name;
+		this.random = new Random();
 	}
 	
-	protected Weapon(String name, int attackValue, int times, Random random) {
+	public Weapon(String name, int attackValue, Attribute attr, Random random) {
 		this.attackValue = attackValue;
 		this.name = name;
 		this.random = random;
-		this.recordTimes = times;
+		this.extraHarm = attr;
+		attrList.add(attr);
 	}
 	
-	public int attack(Player player){
-		this.possible = (random != null ? random.nextBoolean() : possible);
-		String status = player.beAffectedByWeapon(this);
-		times = accumulate(possible, status, times, recordTimes);
-		specialAttackValue = accumulate(possible, status, specialAttackValue, recordAttackValue);
+	public int attack(Player player){		
+		player.beAffectedByWeapon(this);
 		return attackValue;
+	}
+	
+	private Attribute selectAttribute(Random random){
+		int index = random.nextInt(9);
+		try{
+			return attrList.get(index);
+		}
+		catch(Exception e){
+			return NULLAttribute.getInstance();
+		}
 	}
 	
 	public String name(){
@@ -48,86 +58,45 @@ public class Weapon{
 	
 	
 	public int affectBlood(String name, int blood, String status, PrintStream out) {
-		specialAttackValue = reset(times);
-		if(times == 0){
-			return blood;
-		}
-		out.println(name+"受到"+specialAttackValue+"点"+this.getWeaponHarmness()+"伤害,"+
-				name+"剩余生命:"+(blood-specialAttackValue));
-		times--;
-		return blood-specialAttackValue;
-	}
-	
-	private int reset(int times){
-		return (times == 0 ? 0 : specialAttackValue);
-	}
-	
-	protected int accumulate(boolean possible, String status, int current, int record){
-		if(possible && 
-				accumulateFlag(status)){
-			return current+record;
-		}
-		return current;
+		return extraHarm.affectBlood(name, blood, status, out);
 	}
 	
 	public String affectPlayerStatus(String status) {
-		if(!possible){
-			return status;
-		}
-		return accumulateStatus(possible, status);
-	}
-	
-	protected String accumulateStatus(boolean possible, String status){
-		if(accumulateFlag(status)){
-			return this.getWeaponAttributeAgain();
-		}
-		return this.getWeaponAttribute();
-	}
-	
-	private boolean accumulateFlag(String status){
-		return (status.indexOf(this.getWeaponAttribute()) != -1 || status.indexOf(this.getWeaponAttributeAgain()) != -1);
-	}
-	
-	public String affectAttackStatus(String name, String status){
-		if(!possible){
-			return Player.NOTHING;
-		}
-		return name+accumulateStatus(possible, status)+",";
-	}
-	
-	protected String getWeaponAttribute(){
-		return Player.NOTHING;
-	}
-	
-	protected String getWeaponAttributeAgain(){
-		return Player.NOTHING;
-	}
-	
-	protected String getWeaponHarmness(){
-		return "";
+		return extraHarm.affectPlayerStatus(status);
 	}
 
 	public void printStopAttackOnce(String attackName, String beAttackedName, PrintStream out) {
-		
+		extraHarm.printStopAttackOnce(attackName, beAttackedName, out);
 	}
 
 	public String bust(String name) {
-		return "";
+		return extraHarm.bust(name);
 	}
 	
-	protected Attribute accumulate(Attribute another) {
-		return another;
-	}
 
-	public void accumulate(String playerStatus, Weapon affectWithWeapon) {
-				
+	public void addAttribute(Attribute freeze) {
+		attrList.add(freeze);
 	}
-
+	
 	public void accumulate(Weapon affectWithWeapon) {
-		
+		Attribute selected = selectAttribute(random);
+		intensifyAttack(selected);
+		this.extraHarm = affectWithWeapon.accumulate(selected);
+		this.possible = !NULLAttribute.class.equals(selected.getClass());	
+		extraHarm.setPossible(possible);
 	}
 
+	protected Attribute accumulate(Attribute another) {
+		boolean isNextHarmNULL = NULLAttribute.class.equals(another.getClass()) || Bust.class.equals(another.getClass());
+		boolean possibility = !isNextHarmNULL && ((NULLAttribute.class.equals(this.extraHarm.getClass()) || this.extraHarm.getClass().equals(another.getClass())));
+		return (possibility ? this.extraHarm.accumulate(another) : (isNextHarmNULL ? this.extraHarm : another));
+	}
+	
 	public String getWeaponAttributeName() {
-		return "";
+		return this.extraHarm.getAttributeName();
+	}
+	
+	private void intensifyAttack(Attribute attr){
+		this.attackValue = (Bust.class.equals(attr.getClass()) ? this.attackValue * 3 : this.attackValue);
 	}
 }

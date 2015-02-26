@@ -12,16 +12,14 @@ public class Attribute {
 	protected int times=0;
 	protected int recordTimes;
 	
-	protected Attribute(String name, int times, boolean possible) {
+	protected Attribute(String name, int times) {
 		this.name = name;
-		this.possible = possible;
 		this.times = times;
 		this.recordTimes = times;
 	}
 	
-	protected Attribute(String name, int times, int specialAttackValue, boolean possible) {
+	protected Attribute(String name, int times, int specialAttackValue) {
 		this.name = name;
-		this.possible = possible;
 		this.times = times;
 		this.recordTimes = times;
 		this.specialAttackValue = specialAttackValue;
@@ -32,8 +30,8 @@ public class Attribute {
 		int times = another.accumulateTimes(this.times);
 		int specialAttackValue = another.accumulateAttackValue(this.specialAttackValue);
 		try {
-			Constructor<Attribute> constructor = (Constructor<Attribute>) this.getClass().getDeclaredConstructor(String.class, int.class, int.class, boolean.class);
-			return constructor.newInstance(this.name, times, specialAttackValue, true);
+			Constructor<Attribute> constructor = (Constructor<Attribute>) this.getClass().getDeclaredConstructor(String.class, int.class, int.class);
+			return constructor.newInstance(this.name, times, specialAttackValue);
 		} catch (Exception e) {
 			return this;
 		} 
@@ -44,7 +42,7 @@ public class Attribute {
 		if(times == 0){
 			return blood;
 		}
-		out.println(name+"受到"+specialAttackValue+"点"+this.getWeaponHarmness()+"伤害,"+
+		out.println(name+"受到"+specialAttackValue+"点"+this.toString()+"伤害,"+
 				name+"剩余生命:"+(blood-specialAttackValue));
 		times--;
 		return blood-specialAttackValue;
@@ -92,9 +90,9 @@ public class Attribute {
 		return Player.NOTHING;
 	}
 	
-	protected String getWeaponHarmness(){
-		return "";
-	}
+//	protected String getWeaponHarmness(){
+//		return "";
+//	}
 	
 	public void printStopAttackOnce(String attackName, String beAttackedName, PrintStream out) {
 		
