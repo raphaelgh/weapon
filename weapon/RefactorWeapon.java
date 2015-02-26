@@ -34,7 +34,6 @@ public class RefactorWeapon extends Weapon{
 	
 	public int attack(Player player){		
 		player.beAffectedByWeapon(this);
-		//extraHarm.accumulate(status);
 		return attackValue;
 	}
 	
@@ -85,17 +84,17 @@ public class RefactorWeapon extends Weapon{
 	}
 	
 	@Override
-	public void accumulate(String playerStatus, Weapon affectWithWeapon) {
+	public void accumulate(Weapon affectWithWeapon) {
 		Attribute selected = selectAttribute(random);
-		this.extraHarm = affectWithWeapon.accumulate(playerStatus, selected);
+		this.extraHarm = affectWithWeapon.accumulate(selected);
 		this.possible = !NULLHarm.class.equals(selected.getClass());	
 		extraHarm.setPossible(possible);
 	}
 
 	@Override
-	protected Attribute accumulate(String status, Attribute another) {
+	protected Attribute accumulate(Attribute another) {
 		boolean isNextHarmNULL = NULLHarm.class.equals(another.getClass());
 		boolean possibility = !isNextHarmNULL && ((NULLHarm.class.equals(this.extraHarm.getClass()) || this.extraHarm.getClass().equals(another.getClass())));
-		return (possibility ? this.extraHarm.accumulate(status, another) : (isNextHarmNULL ? this.extraHarm : another));
+		return (possibility ? this.extraHarm.accumulate(another) : (isNextHarmNULL ? this.extraHarm : another));
 	}
 }

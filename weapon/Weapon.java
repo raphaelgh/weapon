@@ -115,11 +115,15 @@ public class Weapon{
 		return "";
 	}
 	
-	protected Attribute accumulate(String status, Attribute another) {
+	protected Attribute accumulate(Attribute another) {
 		return another;
 	}
 
 	public void accumulate(String playerStatus, Weapon affectWithWeapon) {
 				
+	}
+
+	public void accumulate(Weapon affectWithWeapon) {
+		
 	}
 }

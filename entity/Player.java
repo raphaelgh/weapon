@@ -52,7 +52,7 @@ public class Player {
 	}
 	
 	public String beAffectedByWeapon(Weapon weapon){
-		weapon.accumulate(playerStatus, this.affectWithWeapon);
+		weapon.accumulate(this.affectWithWeapon);
 		this.affectWithWeapon = weapon;
 		this.playerStatus = weapon.affectPlayerStatus(playerStatus);
 		if(attackStatus.indexOf(name) != -1){

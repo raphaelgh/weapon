@@ -14,10 +14,6 @@ public class NULLHarm implements Attribute{
 	}
 
 	@Override
-	public void accumulate(String status) {
-	}
-
-	@Override
 	public String affectAttackStatus(String name, String status) {
 		return "";
 	}
@@ -48,18 +44,17 @@ public class NULLHarm implements Attribute{
 	}
 
 	@Override
-	public Attribute accumulate(String status, Attribute another) {
+	public Attribute accumulate(Attribute another) {
 		return another;		
 	}
 
 	@Override
-	public int accumulateAttackValue(boolean possible, String status,
-			int recordAttackValue) {
+	public int accumulateAttackValue(boolean possible, int recordAttackValue) {
 		return recordAttackValue;
 	}
 
 	@Override
-	public int accumulateTimes(boolean possible, String status, int recordTimes) {
+	public int accumulateTimes(boolean possible, int recordTimes) {
 		return recordTimes;
 	}
 

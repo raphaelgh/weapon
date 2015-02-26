@@ -9,7 +9,6 @@ public class Base implements Attribute{
 	private final String name;     //not support rename
 	protected boolean possible=false;
 	private int specialAttackValue = 2;
-	private int recordAttackValue = 2 ;
 	protected int times=0;
 	protected int recordTimes;
 	
@@ -28,16 +27,11 @@ public class Base implements Attribute{
 		this.specialAttackValue = specialAttackValue;
 	}
 	
-	public void accumulate(String status){
-		times = accumulate(possible, status, times, recordTimes);
-		specialAttackValue = accumulate(possible, status, specialAttackValue, recordAttackValue);
-	}
-	
 	@SuppressWarnings("unchecked")
-	public Attribute accumulate(String status, Attribute another){
+	public Attribute accumulate(Attribute another){
 		boolean possibility = this.getClass().equals(another.getClass());
-		int times = another.accumulateTimes(possibility, status, this.times);
-		int specialAttackValue = another.accumulateAttackValue(possibility, status, this.recordAttackValue);
+		int times = another.accumulateTimes(possibility, this.times);
+		int specialAttackValue = another.accumulateAttackValue(possibility, this.specialAttackValue);
 		try {
 			Constructor<Attribute> constructor = (Constructor<Attribute>) this.getClass().getDeclaredConstructor(String.class, int.class, int.class, boolean.class);
 			return constructor.newInstance(this.name, times, specialAttackValue, true);
@@ -61,28 +55,12 @@ public class Base implements Attribute{
 		return (times == 0 ? 0 : specialAttackValue);
 	}
 	
-	protected int accumulate(boolean possible, String status, int current, int record){
-		if(possible && 
-				accumulateFlag(status)){
-			return current+record;
-		}
-		return current;
+	public int accumulateTimes(boolean possible, int record){
+		return (possible ? this.recordTimes+record : record);
 	}
 	
-	public int accumulateTimes(boolean possible, String status, int record){
-		if(possible && 
-				accumulateFlag(status)){
-			return this.recordTimes+record;
-		}
-		return record;
-	}
-	
-	public int accumulateAttackValue(boolean possible, String status, int record){
-		if(possible && 
-				accumulateFlag(status)){
-			return this.specialAttackValue+record;
-		}
-		return record;
+	public int accumulateAttackValue(boolean possible, int record){
+		return (possible ? this.specialAttackValue+record : record);
 	}
 	
 	public String affectPlayerStatus(String status) {
