@@ -16,7 +16,6 @@ public class Player {
 	protected final int attackValue; //not support upgrade
 	protected int blood;
 	protected String playerStatus="";
-	protected String attackStatus = "";
 	private final String role = "普通人";
 	protected Weapon affectWithWeapon = new NULLWeapon();
 	
@@ -46,7 +45,7 @@ public class Player {
 
 	protected void beAttacked(int attackValue, String info, PrintStream out){
 		blood = blood - attackValue;
-		String attackStatus = this.affectWithWeapon.getWeaponAttributeName(this.playerStatus);
+		String attackStatus = this.affectWithWeapon.getWeaponAttributeName();
 		attackStatus = ("".equals(attackStatus) ? attackStatus : name+attackStatus+",");
 		out.println(info+name+"受到"+attackValue+"点伤害,"+attackStatus+
 				name+"剩余生命:"+blood);
@@ -57,10 +56,10 @@ public class Player {
 		weapon.accumulate(this.affectWithWeapon);
 		this.affectWithWeapon = weapon;
 		this.playerStatus = weapon.affectPlayerStatus(playerStatus);
-		if(attackStatus.indexOf(name) != -1){
-			attackStatus = attackStatus.substring(name.length(), attackStatus.length() -1);
-		}
-		this.attackStatus = weapon.affectAttackStatus(name, attackStatus);
+//		if(attackStatus.indexOf(name) != -1){
+//			attackStatus = attackStatus.substring(name.length(), attackStatus.length() -1);
+//		}
+//		this.attackStatus = weapon.affectAttackStatus(name, attackStatus);
 		return playerStatus;
 	}	
 	

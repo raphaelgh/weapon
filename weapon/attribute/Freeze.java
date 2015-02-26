@@ -4,7 +4,7 @@ import java.io.PrintStream;
 
 import com.tw.trainning.fightergame.entity.Player;
 
-public class Freeze extends Base{
+public class Freeze extends Attribute{
 	
 	public static final String ATTRIBUTE = "¶³½©ÁË";
 	public static final String HARMNESS = "±ù¶³";

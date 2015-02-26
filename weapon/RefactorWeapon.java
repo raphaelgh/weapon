@@ -7,14 +7,14 @@ import java.util.Random;
 
 import com.tw.trainning.fightergame.entity.Player;
 import com.tw.trainning.fightergame.weapon.attribute.Attribute;
-import com.tw.trainning.fightergame.weapon.attribute.NULLHarm;
+import com.tw.trainning.fightergame.weapon.attribute.NULLAttribute;
 
 public class RefactorWeapon extends Weapon{
 	protected final int attackValue; //not support upgrade
 	private final String name;     //not support rename
 	protected boolean possible=false;
 	protected Random random;
-	private Attribute extraHarm = NULLHarm.getNULLHarm();
+	private Attribute extraHarm = NULLAttribute.getInstance();
 	private List<Attribute> attrList = new ArrayList<Attribute>();
 	
 	public RefactorWeapon(String name, int attackValue) {
@@ -43,7 +43,7 @@ public class RefactorWeapon extends Weapon{
 			return attrList.get(index);
 		}
 		catch(Exception e){
-			return NULLHarm.getNULLHarm();
+			return NULLAttribute.getInstance();
 		}
 	}
 	
@@ -64,11 +64,6 @@ public class RefactorWeapon extends Weapon{
 	public String affectPlayerStatus(String status) {
 		return extraHarm.affectPlayerStatus(status);
 	}
-	
-	
-//	public String affectAttackStatus(String name, String status){
-//		return extraHarm.getAttributeName(name, status);
-//	}
 
 	public void printStopAttackOnce(String attackName, String beAttackedName, PrintStream out) {
 		extraHarm.printStopAttackOnce(attackName, beAttackedName, out);
@@ -87,19 +82,19 @@ public class RefactorWeapon extends Weapon{
 	public void accumulate(Weapon affectWithWeapon) {
 		Attribute selected = selectAttribute(random);
 		this.extraHarm = affectWithWeapon.accumulate(selected);
-		this.possible = !NULLHarm.class.equals(selected.getClass());	
+		this.possible = !NULLAttribute.class.equals(selected.getClass());	
 		extraHarm.setPossible(possible);
 	}
 
 	@Override
 	protected Attribute accumulate(Attribute another) {
-		boolean isNextHarmNULL = NULLHarm.class.equals(another.getClass());
-		boolean possibility = !isNextHarmNULL && ((NULLHarm.class.equals(this.extraHarm.getClass()) || this.extraHarm.getClass().equals(another.getClass())));
+		boolean isNextHarmNULL = NULLAttribute.class.equals(another.getClass());
+		boolean possibility = !isNextHarmNULL && ((NULLAttribute.class.equals(this.extraHarm.getClass()) || this.extraHarm.getClass().equals(another.getClass())));
 		return (possibility ? this.extraHarm.accumulate(another) : (isNextHarmNULL ? this.extraHarm : another));
 	}
 	
 	@Override
-	public String getWeaponAttributeName(String playerStatus) {
-		return this.extraHarm.getAttributeName(playerStatus);
+	public String getWeaponAttributeName() {
+		return this.extraHarm.getAttributeName();
 	}
 }

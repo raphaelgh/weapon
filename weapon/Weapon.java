@@ -127,7 +127,7 @@ public class Weapon{
 		
 	}
 
-	public String getWeaponAttributeName(String playerStatus) {
-		return playerStatus;
+	public String getWeaponAttributeName() {
+		return "";
 	}
 }

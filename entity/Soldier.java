@@ -35,6 +35,7 @@ public class Soldier extends Player{
 	@Override
 	protected void beAttacked(int attackValue, String info, PrintStream out){
 		blood = blood - (attackValue - protect);
+		String attackStatus = this.affectWithWeapon.getWeaponAttributeName();
 		out.println(info+name+"受到"+(attackValue - protect)+"点伤害,"+attackStatus+
 				name+"剩余生命:"+blood);
 		playerStatus = blood <= 0 ? DEFEATED : playerStatus;

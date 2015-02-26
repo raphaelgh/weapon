@@ -1,6 +1,6 @@
 package com.tw.trainning.fightergame.weapon.attribute;
 
-public class Fire extends Base {
+public class Fire extends Attribute {
 
 	private final String ATTRIBUTE = "…’…À¡À";
 	private final String HARMNESS = "…’…À";
