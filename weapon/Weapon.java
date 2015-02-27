@@ -83,7 +83,7 @@ public class Weapon{
 	public int accumulate(Weapon affectWithWeapon) {
 		Attribute selected = selectAttribute(random);		
 		this.extraHarm = affectWithWeapon.accumulate(selected);
-		this.possible = !NULLAttribute.class.equals(selected.getClass());	
+		this.possible = !(NULLAttribute.class.equals(selected.getClass()) || Bust.class.equals(selected.getClass()));	
 		extraHarm.setPossible(possible);
 		return intensifyAttack(selected);
 	}

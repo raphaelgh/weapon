@@ -520,10 +520,10 @@ public class GameTest {
 		verify(out).println("李四被打败了");
 	}
 	
-	//*----------------------fourth problem step one finished, rest is bust test case-----------------------------------------
+	//*----------------------fourth problem step one finished-----------------------------------------
 	
 	@Test
-	public void should_weapon_first_fire_and_freeze_when_fire_finish(){
+	public void should_weapon_with_two_different_attributes_and_start_one_by_one(){
 		when(random.nextInt(9))
 		.thenReturn(0)
 		.thenReturn(2)
@@ -576,7 +576,7 @@ public class GameTest {
 	}
 	
 	@Test
-	public void should_weapon_first_fire_and_freeze_when_fire_not_finish(){
+	public void should_weapon_with_two_different_attributes_and_cannot_accumlate_and_player_only_at_one_status(){
 		when(random.nextInt(9))
 		.thenReturn(0)
 		.thenReturn(1)
@@ -599,6 +599,7 @@ public class GameTest {
 		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:90");
 		
 		verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三冻僵了,张三剩余生命:78");
+		verify(out, never()).println("张三受到2点烧伤伤害,张三剩余生命:86");
 		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:80");
 		
 		verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:68");		
@@ -627,7 +628,7 @@ public class GameTest {
 	}
 	
 	@Test
-	public void should_weapon_with_two_fire_and_accumulate(){
+	public void should_weapon_with_two_same_attributes_and_accumulate(){
 		when(random.nextInt(9))
 		.thenReturn(0)
 		.thenReturn(1)
@@ -659,15 +660,67 @@ public class GameTest {
 		
 		verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:44");
 		verify(out).println("张三受到7点烧伤伤害,张三剩余生命:37");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:60");
 		
 		verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:27");
 		verify(out).println("张三受到7点烧伤伤害,张三剩余生命:20");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:60");		
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:50");		
 		
 		verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:10");		
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:50");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:40");
 		
 		verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:0");
 		verify(out).println("张三被打败了");
 	}
+	
+	@Test
+	public void should_weapon_with_one_attribute_and_bust_and_bust_not_influence_player_status(){
+		when(random.nextInt(9))
+		.thenReturn(0)
+		.thenReturn(1)
+		.thenReturn(3)
+		.thenReturn(2)
+		.thenReturn(2)
+		.thenReturn(3)
+		.thenReturn(4);
+		Attribute smallFire = new Fire("烧伤", 2, 2);
+		Attribute bust = new Bust();
+		Weapon fireWeaponWithBust = new Weapon("烈焰剑", 5, smallFire, random);
+		fireWeaponWithBust.addAttribute(bust);
+		Soldier playerA = new Soldier("李四",5,100,fireWeaponWithBust,10);
+		Player playerB = new Player("张三", 20, 100);
+		Game game = new Game(playerA, playerB, out);
+		game.start();
+		
+		verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三烧伤了,张三剩余生命:90");
+		verify(out).println("张三受到2点烧伤伤害,张三剩余生命:88");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:90");
+		
+		verify(out).println("战士李四用烈焰剑攻击了普通人张三,李四发动了全力一击,张三受到20点伤害,张三剩余生命:68");
+		verify(out).println("张三受到2点烧伤伤害,张三剩余生命:66");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:80");
+		
+		verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:56");	
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:70");
+		
+		verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:46");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:60");
+		
+		verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:36");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:50");		
+		
+		verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:26");		
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:40");
+		
+		verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:16");		
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:30");
+		
+		verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:6");		
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:20");
+		
+		verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:-4");		
+		verify(out).println("张三被打败了");
+	}
+	
+	//*----------------------fourth problem step two finished-----------------------------------------
 }
