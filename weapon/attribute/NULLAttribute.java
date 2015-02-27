@@ -31,11 +31,6 @@ public class NULLAttribute extends Attribute{
 	}
 
 	@Override
-	public String bust(String name) {
-		return "";
-	}
-
-	@Override
 	public void printStopAttackOnce(String attackName, String beAttackedName,
 			PrintStream out) {
 	}

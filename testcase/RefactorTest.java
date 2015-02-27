@@ -18,6 +18,7 @@ import com.tw.trainning.fightergame.entity.Soldier;
 import com.tw.trainning.fightergame.weapon.Weapon;
 import com.tw.trainning.fightergame.weapon.WeaponRespository;
 import com.tw.trainning.fightergame.weapon.attribute.Attribute;
+import com.tw.trainning.fightergame.weapon.attribute.Bust;
 import com.tw.trainning.fightergame.weapon.attribute.Fire;
 import com.tw.trainning.fightergame.weapon.attribute.Freeze;
 import com.tw.trainning.fightergame.weapon.attribute.Halo;
@@ -331,6 +332,147 @@ public class RefactorTest {
 		
 		verify(out).println("战士李四用晕锤攻击了普通人张三,张三受到10点伤害,张三剩余生命:0");		
 		verify(out).println("张三被打败了");
+	}
+	
+	@Test
+	public void should_soldier_use_weapon_with_bust_fight_with_person(){
+		when(random.nextInt(9))
+		.thenReturn(0)
+		.thenReturn(1);
+		Attribute bust = new Bust();
+		Weapon bustWeapon = new Weapon("利剑", 20, bust, random);
+		Soldier playerA = new Soldier("李四",10,100,bustWeapon,10);
+		Player playerB = new Player("张三", 20, 100);
+		Game game = new Game(playerA, playerB, out);
+		game.start();
+		verify(out).println("战士李四用利剑攻击了普通人张三,李四发动了全力一击,张三受到70点伤害,张三剩余生命:30");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:90");
+		
+		verify(out).println("战士李四用利剑攻击了普通人张三,张三受到30点伤害,张三剩余生命:0");
+		verify(out).println("张三被打败了");
+	}
+	
+	@Test
+	public void should_soldier_use_weapon_with_bust_and_accumulation_fight_with_person(){
+		when(random.nextInt(9))
+		.thenReturn(0)
+		.thenReturn(0)
+		.thenReturn(1)
+		.thenReturn(1)
+		.thenReturn(1)
+		.thenReturn(0)
+		.thenReturn(1);
+		Attribute bust = new Bust();
+		Weapon bustWeapon = new Weapon("利剑", 5, bust, random);
+//		Weapon bust = new WeaponWithBust("利剑", 5, 2, random);
+		Soldier playerA = new Soldier("李四",5,100,bustWeapon,10);
+		Player playerB = new Player("张三", 20, 100);
+		Game game = new Game(playerA, playerB, out);
+		game.start();
+		verify(out).println("战士李四用利剑攻击了普通人张三,李四发动了全力一击,张三受到20点伤害,张三剩余生命:80");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:90");
+		
+		verify(out).println("战士李四用利剑攻击了普通人张三,李四发动了全力一击,张三受到20点伤害,张三剩余生命:60");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:80");
+		
+		verify(out).println("战士李四用利剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:50");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:70");
+		
+		verify(out).println("战士李四用利剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:40");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:60");
+		
+		verify(out).println("战士李四用利剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:30");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:50");
+		
+		verify(out).println("战士李四用利剑攻击了普通人张三,李四发动了全力一击,张三受到20点伤害,张三剩余生命:10");
+		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:60");
+		
+		verify(out).println("战士李四用利剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:0");
+		
+		verify(out).println("张三被打败了");
+	}
+	
+	@Test
+	public void should_soldier_use_weapon_with_fire_fight_with_soldier_use_weapon_with_freeze(){
+		Random fireRandom = mock(Random.class);
+		when(fireRandom.nextInt(9))
+		.thenReturn(0)
+		.thenReturn(1)
+		.thenReturn(1)
+		.thenReturn(1);
+		
+		Random freezeRandom = mock(Random.class);
+		when(freezeRandom.nextInt(9))
+		.thenReturn(0)
+		.thenReturn(1)
+		.thenReturn(1)
+		.thenReturn(1);
+		
+		Attribute fire = new Fire("烧伤", 3);
+		Weapon fireWeapon = new Weapon("火焰剑", 15, fire, fireRandom);
+		Attribute feeze = new Freeze("冰冻", 2);
+		Weapon freezeWeapon = new Weapon("冰刀", 20, feeze, freezeRandom);
+		Soldier playerA = new Soldier("李四",10,100,fireWeapon,10);
+		Soldier playerB = new Soldier("张三", 20, 100, freezeWeapon, 10);
+		Game game = new Game(playerA, playerB, out);
+		game.start();
+		verify(out).println("战士李四用火焰剑攻击了战士张三,张三受到15点伤害,张三烧伤了,张三剩余生命:85");
+		verify(out).println("张三受到2点烧伤伤害,张三剩余生命:83");
+		verify(out).println("战士张三用冰刀攻击了战士李四,李四受到30点伤害,李四冻僵了,李四剩余生命:70");
+		
+		verify(out).println("战士李四用火焰剑攻击了战士张三,张三受到15点伤害,张三剩余生命:68");
+		verify(out).println("张三受到2点烧伤伤害,张三剩余生命:66");
+		verify(out).println("战士张三用冰刀攻击了战士李四,李四受到30点伤害,李四剩余生命:40");
+		
+		verify(out).println("战士李四用火焰剑攻击了战士张三,张三受到15点伤害,张三剩余生命:51");
+		verify(out).println("张三受到2点烧伤伤害,张三剩余生命:49");
+		verify(out).println("战士张三用冰刀攻击了战士李四,李四受到30点伤害,李四剩余生命:10");
+		
+		verify(out).println("李四冻得直哆嗦,没有击中张三");
+		verify(out).println("战士张三用冰刀攻击了战士李四,李四受到30点伤害,李四剩余生命:-20");
+		
+		verify(out).println("李四被打败了");
+	}
+	
+	@Test
+	public void should_soldier_use_weapon_with_poison_fight_with_soldier_use_weapon_with_halo(){
+		Random poisonRandom = mock(Random.class);
+		when(poisonRandom.nextInt(9))
+		.thenReturn(0)
+		.thenReturn(1)
+		.thenReturn(1)
+		.thenReturn(1);
+		
+		Random haloRandom = mock(Random.class);
+		when(haloRandom.nextInt(9))
+		.thenReturn(0)
+		.thenReturn(1)
+		.thenReturn(1)
+		.thenReturn(1);
+		
+		Attribute posion = new Poison("毒性", 2);
+		Weapon poisonWeapon = new Weapon("毒剑", 15, posion, poisonRandom);
+		Attribute halo = new Halo("眩晕", 2);
+		Weapon haloWeapon = new Weapon("晕锤", 20, halo, haloRandom);
+		Soldier playerA = new Soldier("李四",10,100,poisonWeapon,10);
+		Soldier playerB = new Soldier("张三", 20, 100, haloWeapon, 10);
+		Game game = new Game(playerA, playerB, out);
+		game.start();
+		verify(out).println("战士李四用毒剑攻击了战士张三,张三受到15点伤害,张三中毒了,张三剩余生命:85");
+		verify(out).println("张三受到2点毒性伤害,张三剩余生命:83");
+		verify(out).println("战士张三用晕锤攻击了战士李四,李四受到30点伤害,李四晕倒了,李四剩余生命:70");
+		
+		verify(out).println("李四晕倒了,无法攻击,眩晕还剩:1轮");
+		verify(out).println("张三受到2点毒性伤害,张三剩余生命:81");
+		verify(out).println("战士张三用晕锤攻击了战士李四,李四受到30点伤害,李四剩余生命:40");
+		
+		verify(out).println("李四晕倒了,无法攻击,眩晕还剩:0轮");
+		verify(out).println("战士张三用晕锤攻击了战士李四,李四受到30点伤害,李四剩余生命:10");
+		
+		verify(out).println("战士李四用毒剑攻击了战士张三,张三受到15点伤害,张三剩余生命:66");
+		verify(out).println("战士张三用晕锤攻击了战士李四,李四受到30点伤害,李四剩余生命:-20");
+		
+		verify(out).println("李四被打败了");
 	}
 	
 	//*----------------------fourth problem step one finished, rest is bust test case-----------------------------------------

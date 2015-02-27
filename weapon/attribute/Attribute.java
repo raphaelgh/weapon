@@ -97,10 +97,6 @@ public class Attribute {
 	public void printStopAttackOnce(String attackName, String beAttackedName, PrintStream out) {
 		
 	}
-
-	public String bust(String name) {
-		return "";
-	}
 	
 	public String toString(){
 		return name;

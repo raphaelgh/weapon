@@ -17,6 +17,7 @@ public class Weapon{
 	protected Random random;
 	private Attribute extraHarm = NULLAttribute.getInstance();
 	private List<Attribute> attrList = new ArrayList<Attribute>();
+	private String bust;
 	
 	public Weapon(String name, int attackValue) {
 		this.attackValue = attackValue;
@@ -33,8 +34,7 @@ public class Weapon{
 	}
 	
 	public int attack(Player player){		
-		player.beAffectedByWeapon(this);
-		return attackValue;
+		return player.beAffectedByWeapon(this);
 	}
 	
 	private Attribute selectAttribute(Random random){
@@ -70,7 +70,7 @@ public class Weapon{
 	}
 
 	public String bust(String name) {
-		return extraHarm.bust(name);
+		return ("".equals(bust) ? bust : name+bust);
 	}
 	
 
@@ -78,12 +78,12 @@ public class Weapon{
 		attrList.add(freeze);
 	}
 	
-	public void accumulate(Weapon affectWithWeapon) {
-		Attribute selected = selectAttribute(random);
-		intensifyAttack(selected);
+	public int accumulate(Weapon affectWithWeapon) {
+		Attribute selected = selectAttribute(random);		
 		this.extraHarm = affectWithWeapon.accumulate(selected);
 		this.possible = !NULLAttribute.class.equals(selected.getClass());	
 		extraHarm.setPossible(possible);
+		return intensifyAttack(selected);
 	}
 
 	protected Attribute accumulate(Attribute another) {
@@ -96,7 +96,8 @@ public class Weapon{
 		return this.extraHarm.getAttributeName();
 	}
 	
-	private void intensifyAttack(Attribute attr){
-		this.attackValue = (Bust.class.equals(attr.getClass()) ? this.attackValue * 3 : this.attackValue);
+	private int intensifyAttack(Attribute attr){		
+		this.bust = (Bust.class.equals(attr.getClass()) ? "发动了全力一击," : "");
+		return (Bust.class.equals(attr.getClass()) ? this.attackValue * 3 : this.attackValue);
 	}
 }

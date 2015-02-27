@@ -52,11 +52,11 @@ public class Player {
 		playerStatus = blood <= 0 ? DEFEATED : playerStatus;
 	}
 	
-	public String beAffectedByWeapon(Weapon weapon){
-		weapon.accumulate(this.affectWithWeapon);
+	public int beAffectedByWeapon(Weapon weapon){
+		int intensifiedWeaponAttackValue = weapon.accumulate(this.affectWithWeapon);
 		this.affectWithWeapon = weapon;
 		this.playerStatus = weapon.affectPlayerStatus(playerStatus);
-		return playerStatus;
+		return intensifiedWeaponAttackValue;
 	}	
 	
 	protected void checkAffect(PrintStream out) {
