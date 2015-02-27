@@ -11,6 +11,10 @@ public class Fire extends Attribute {
 	public Fire(String name, int times, int specialAttackValue) {
 		super(name, times, specialAttackValue);
 	}
+	
+	public Fire(int times, int specialAttackValue) {
+		super("»ðÑæ", times, specialAttackValue);
+	}
 
 	@Override
 	protected String getWeaponAttribute(){

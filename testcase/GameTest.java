@@ -111,9 +111,24 @@ public class GameTest {
 	
 	@Test
 	public void should_weapon_respository_work_well(){
-		WeaponRespository.listWeapon(out);
-		verify(out).print("名称:优质木棒,攻击力:20\r\n名称:利剑,攻击力:50\r\n" +
-				"名称:长矛,攻击力:40\r\n名称:砍刀,攻击力:30\r\n");
+		when(random.nextInt(20))
+		.thenReturn(1)
+		.thenReturn(1);
+		
+		when(random.nextInt(7))
+		.thenReturn(1);
+		
+		when(random.nextInt(5))
+		.thenReturn(1)
+		.thenReturn(1);
+		
+		when(random.nextInt(3))
+		.thenReturn(1)
+		.thenReturn(1);
+		
+		WeaponRespository weaponRes = new WeaponRespository(random);
+		weaponRes.listWeapon(out);
+		verify(out).print("名称:寒冰@棒,攻击力:2\r\n属性1:伤害:寒冰,伤害值:2,发动轮次:1,发动概率:false\r\n\r\n");
 	}
 	
 	//*---------------------------weapon respository finished----------------------------------------------
@@ -364,7 +379,6 @@ public class GameTest {
 		.thenReturn(1);
 		Attribute bust = new Bust();
 		Weapon bustWeapon = new Weapon("利剑", 5, bust, random);
-//		Weapon bust = new WeaponWithBust("利剑", 5, 2, random);
 		Soldier playerA = new Soldier("李四",5,100,bustWeapon,10);
 		Player playerB = new Player("张三", 20, 100);
 		Game game = new Game(playerA, playerB, out);

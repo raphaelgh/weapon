@@ -11,6 +11,10 @@ public class Halo extends Attribute{
 	public Halo(String name, int times, int specialAttackValue) {
 		super(name, times, specialAttackValue);
 	}
+	
+	public Halo(int times, int specialAttackValue) {
+		super("яётн", times, specialAttackValue);
+	}
 
 	public static final String ATTRIBUTE = "тн╣╧ак";
 	

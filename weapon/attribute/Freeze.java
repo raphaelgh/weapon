@@ -14,6 +14,10 @@ public class Freeze extends Attribute{
 		super(name, times, specialAttackValue);
 	}
 	
+	public Freeze(int times, int specialAttackValue){
+		super("º®±ù", times, specialAttackValue);
+	}
+	
 	@Override
 	protected String getWeaponAttribute(){
 		return ATTRIBUTE;

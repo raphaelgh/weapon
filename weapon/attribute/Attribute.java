@@ -4,11 +4,12 @@ import java.io.PrintStream;
 import java.lang.reflect.Constructor;
 
 public class Attribute {
-	private final String name;     //not support rename
+	private final String name;   
 	protected boolean possible;
 	private int specialAttackValue;
 	protected int times;
 	protected int recordTimes;
+	private static final String SEPERATOR = ",";
 	
 	protected Attribute(String name, int times) {
 		this.name = name;
@@ -43,7 +44,7 @@ public class Attribute {
 		if(times == 0){
 			return blood;
 		}
-		out.println(name+"受到"+specialAttackValue+"点"+this.toString()+"伤害,"+
+		out.println(name+"受到"+specialAttackValue+"点"+this.nameToString()+"伤害,"+
 				name+"剩余生命:"+(blood-specialAttackValue));
 		times--;
 		return blood-specialAttackValue;
@@ -95,8 +96,13 @@ public class Attribute {
 		
 	}
 	
-	public String toString(){
+	public String nameToString(){
 		return name;
+	}
+	
+	@Override
+	public String toString(){
+		return "伤害:"+this.name+SEPERATOR+"伤害值:"+this.specialAttackValue+SEPERATOR+"发动轮次:"+this.times+SEPERATOR+"发动概率:"+this.possible;
 	}
 
 	public void setPossible(boolean possible) {

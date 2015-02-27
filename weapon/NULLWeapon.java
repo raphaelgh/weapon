@@ -1,13 +1,16 @@
 package com.tw.trainning.fightergame.weapon;
 
 public class NULLWeapon extends Weapon{
-	
-//	private Attribute extraHarm = NULLHarm.getNULLHarm();
-//	private List<Attribute> attrList = new ArrayList<Attribute>();
 
-	public NULLWeapon() {
+    private static NULLWeapon instance = new NULLWeapon();
+	
+	public static NULLWeapon getInstance(){
+		instance = (instance == null ? new NULLWeapon() : instance);
+		return instance;
+	}
+
+	private NULLWeapon() {
 		super("", 0);
-		//attrList.add(extraHarm);
 	}
 
 }

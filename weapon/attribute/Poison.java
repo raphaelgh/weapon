@@ -10,6 +10,10 @@ public class Poison extends Attribute{
 	public Poison(String name, int times, int specialAttackValue) {
 		super(name, times, specialAttackValue);
 	}
+	
+	public Poison(int times, int specialAttackValue) {
+		super("Éß¶¾", times, specialAttackValue);
+	}
 
 	@Override
 	protected String getWeaponAttribute(){

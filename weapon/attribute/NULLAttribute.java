@@ -54,5 +54,10 @@ public class NULLAttribute extends Attribute{
 	protected int accumulateTimes(int recordTimes) {
 		return recordTimes;
 	}
+	
+	@Override
+	public String toString(){
+		return "";
+	}
 
 }
