@@ -3,19 +3,19 @@ package com.tw.trainning.fightergame.weapon.attribute;
 import java.io.PrintStream;
 import java.lang.reflect.Constructor;
 
-import com.tw.trainning.fightergame.entity.Player;
-
 public class Attribute {
 	private final String name;     //not support rename
-	protected boolean possible=false;
-	private int specialAttackValue = 2;
-	protected int times=0;
+	protected boolean possible;
+	private int specialAttackValue;
+	protected int times;
 	protected int recordTimes;
 	
 	protected Attribute(String name, int times) {
 		this.name = name;
 		this.times = times;
 		this.recordTimes = times;
+		this.specialAttackValue = 2;
+		this.possible=false;
 	}
 	
 	protected Attribute(String name, int times, int specialAttackValue) {
@@ -23,6 +23,7 @@ public class Attribute {
 		this.times = times;
 		this.recordTimes = times;
 		this.specialAttackValue = specialAttackValue;
+		this.possible=false;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -83,16 +84,12 @@ public class Attribute {
 	}
 	
 	protected String getWeaponAttribute(){
-		return Player.NOTHING;
+		return "";
 	}
 	
 	protected String getWeaponAttributeAgain(){
-		return Player.NOTHING;
+		return "";
 	}
-	
-//	protected String getWeaponHarmness(){
-//		return "";
-//	}
 	
 	public void printStopAttackOnce(String attackName, String beAttackedName, PrintStream out) {
 		

@@ -11,11 +11,11 @@ import com.tw.trainning.fightergame.weapon.attribute.Bust;
 import com.tw.trainning.fightergame.weapon.attribute.NULLAttribute;
 
 public class Weapon{
-	protected int attackValue; //not support upgrade
+	protected int attackValue;
 	private final String name;     //not support rename
 	protected boolean possible=false;
 	protected Random random;
-	private Attribute extraHarm = NULLAttribute.getInstance();
+	private Attribute extraHarm;
 	private List<Attribute> attrList = new ArrayList<Attribute>();
 	private String bust;
 	
@@ -23,6 +23,8 @@ public class Weapon{
 		this.attackValue = attackValue;
 		this.name = name;
 		this.random = new Random();
+		extraHarm = NULLAttribute.getInstance();
+		attrList.add(extraHarm);
 	}
 	
 	public Weapon(String name, int attackValue, Attribute attr, Random random) {
@@ -30,7 +32,7 @@ public class Weapon{
 		this.name = name;
 		this.random = random;
 		this.extraHarm = attr;
-		attrList.add(attr);
+		attrList.add(extraHarm);
 	}
 	
 	public int attack(Player player){		

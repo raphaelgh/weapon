@@ -2,8 +2,6 @@ package com.tw.trainning.fightergame.weapon.attribute;
 
 import java.io.PrintStream;
 
-import com.tw.trainning.fightergame.entity.Player;
-
 public class Halo extends Attribute{
 	
 	public Halo(String name, int times) {
@@ -35,7 +33,7 @@ public class Halo extends Attribute{
 	@Override
 	public String affectPlayerStatus(String status) {
 		if(!possible && times == 0 && status.indexOf("‘Œµπ") != -1){
-			return Player.NOTHING;
+			return "";
 		}
 		if(!possible && status.indexOf("‘Œµπ") == -1){
 			return status;

@@ -2,8 +2,6 @@ package com.tw.trainning.fightergame.weapon.attribute;
 
 import java.io.PrintStream;
 
-import com.tw.trainning.fightergame.entity.Player;
-
 public class Freeze extends Attribute{
 	
 	private static final String ATTRIBUTE = "¶³½©ÁË";
@@ -35,7 +33,7 @@ public class Freeze extends Attribute{
 	@Override
 	public String affectPlayerStatus(String status) {
 		if(times == 0 && status.indexOf("¶³½©") != -1){
-			return Player.NOTHING+",ÎÞ·¨¹¥»÷";
+			return ",ÎÞ·¨¹¥»÷";
 		}
 		if(times % 2 == 0 && status.indexOf("¶³½©") != -1){ //freeze twice
 			return status+",ÎÞ·¨¹¥»÷";

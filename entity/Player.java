@@ -7,10 +7,7 @@ import com.tw.trainning.fightergame.weapon.Weapon;
 
 public class Player {
 	
-	//public static enum STATE{DEFEAT, FREEZE, FIRE, POISON, HALO, CANNOTATTACK, NORMAL};
-	
-	public static final String DEFEATED = "被打败了";
-	public static final String NOTHING = "";
+	protected static final String DEFEATED = "被打败了";
 
 	protected final String name;     //not support rename
 	protected final int attackValue; //not support upgrade
