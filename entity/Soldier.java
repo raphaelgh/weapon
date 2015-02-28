@@ -34,13 +34,18 @@ public class Soldier extends Player{
 	
 	@Override
 	protected void beAttacked(int attackValue, String info, PrintStream out){
-		blood = blood - (attackValue - protect);
+		int value = (attackValue - protect) < 0 ? 0 : (attackValue - protect);
+		blood = blood - value;
 		String attackStatus = this.affectWithWeapon.getWeaponAttributeName();
 		attackStatus = ("".equals(attackStatus) ? attackStatus : name+attackStatus+",");
-		out.println(info+name+"受到"+(attackValue - protect)+"点伤害,"+attackStatus+
+		out.println(info+name+"受到"+value+"点伤害,"+attackStatus+
 				name+"剩余生命:"+blood);
 		playerStatus = blood <= 0 ? DEFEATED : playerStatus;
 	}
 
-
+	@Override
+	public String toString(){
+		return super.toString()+seperator+"防御力:"+protect+seperator+
+		"\r\n装备的武器信息:"+this.weapon.toString();
+	}
 }

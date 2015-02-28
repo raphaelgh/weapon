@@ -128,7 +128,7 @@ public class GameTest {
 		
 		WeaponRespository weaponRes = new WeaponRespository(random);
 		weaponRes.listWeapon(out);
-		verify(out).print("名称:寒冰@棒,攻击力:2\r\n属性1:伤害:寒冰,伤害值:2,发动轮次:1,发动概率:false\r\n\r\n");
+		verify(out).print("名称:寒冰@棒,攻击力:2\r\n属性1:伤害:寒冰,伤害值:2,发动轮次:2,发动概率:0.5\r\n\r\n");
 	}
 	
 	//*---------------------------weapon respository finished----------------------------------------------

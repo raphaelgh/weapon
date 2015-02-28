@@ -8,7 +8,7 @@ import com.tw.trainning.fightergame.weapon.Weapon;
 public class Player {
 	
 	protected static final String DEFEATED = "被打败了";
-
+	protected static final String seperator = ",";
 	protected final String name;     //not support rename
 	protected final int attackValue; //not support upgrade
 	protected int blood;
@@ -62,5 +62,10 @@ public class Player {
 
 	public void outputStatus(PrintStream out) {
 		out.println(name + playerStatus);
+	}
+	
+	@Override
+	public String toString(){
+		return "名字:"+name+seperator+"角色:"+this.getRole()+seperator+"攻击力:"+attackValue;
 	}
 }

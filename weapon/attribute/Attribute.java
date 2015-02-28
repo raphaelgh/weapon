@@ -10,6 +10,7 @@ public class Attribute {
 	protected int times;
 	protected int recordTimes;
 	private static final String SEPERATOR = ",";
+	protected double rate;
 	
 	protected Attribute(String name, int times) {
 		this.name = name;
@@ -17,6 +18,7 @@ public class Attribute {
 		this.recordTimes = times;
 		this.specialAttackValue = 2;
 		this.possible=false;
+		this.rate = 0.5;
 	}
 	
 	protected Attribute(String name, int times, int specialAttackValue) {
@@ -25,6 +27,16 @@ public class Attribute {
 		this.recordTimes = times;
 		this.specialAttackValue = specialAttackValue;
 		this.possible=false;
+		this.rate = 0.5;
+	}
+	
+	protected Attribute(String name, int times, int specialAttackValue, double rate) {
+		this.name = name;
+		this.times = times;
+		this.recordTimes = times;
+		this.specialAttackValue = specialAttackValue;
+		this.possible=false;
+		this.rate = rate;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -102,7 +114,9 @@ public class Attribute {
 	
 	@Override
 	public String toString(){
-		return "伤害:"+this.name+SEPERATOR+"伤害值:"+this.specialAttackValue+SEPERATOR+"发动轮次:"+this.times+SEPERATOR+"发动概率:"+this.possible;
+		return "伤害:"+this.name+SEPERATOR+"伤害值:"
+		+this.specialAttackValue+SEPERATOR+"发动轮次:"
+		+this.times+SEPERATOR+"发动概率:"+this.rate;
 	}
 
 	public void setPossible(boolean possible) {

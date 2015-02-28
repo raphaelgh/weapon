@@ -25,7 +25,7 @@ public class WeaponRespository {
 	private static final int ATTRIBUTE_TIMES = 5;
 	private static final int ATTRIBUTE_ATTACK_VALUE = 3;
 	
-	private String[] weaponName = {"¹÷", "°ô", "µ¶", "²æ", "êª", "½£", "Ç¹"};
+	private String[] weaponName = {"¹÷", "°ô", "µ¶", "²æ", "êª", "½£", "Ç¹", "½£", "Ã¬"};
 	private Class<?>[] attrClass = {Fire.class, Freeze.class, Halo.class, Poison.class, Bust.class};
 	
 	public WeaponRespository(Random random){
@@ -73,7 +73,7 @@ public class WeaponRespository {
 	
 	@SuppressWarnings("unchecked")
 	private Attribute generatorAttribute(Class<?> attr, Random random){
-		int times = random.nextInt(ATTRIBUTE_TIMES);
+		int times = random.nextInt(ATTRIBUTE_TIMES) + 1;
 		int specialAttackValue = random.nextInt(ATTRIBUTE_ATTACK_VALUE) + 1;
 		try {
 			Constructor<Attribute> constructor = (Constructor<Attribute>) attr.getDeclaredConstructor(int.class, int.class);
@@ -97,7 +97,7 @@ public class WeaponRespository {
 		return list.get(number);
 	}
 	
-//	public static void main(String[] args){
-//		WeaponRespository.listWeapon(System.out);
-//	}
+	public int size(){
+		return this.list.size();
+	}
 }
