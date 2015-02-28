@@ -24,25 +24,25 @@ public class Game {
 	}
 
 	public void start(){
-		while(playerA.canBeAttack() && playerB.canBeAttack()){
+		while(playerA.isLive(out)){
 			playerA.attack(playerB, out);
-			if(!playerB.canBeAttack()){
+			if(!playerB.isLive(out)){
 				break;
 			}
 			playerB.attack(playerA, out);
 		}
-		Player player = playerA.canBeAttack() ? playerB : playerA;
+		Player player = playerA.isLive(out) ? playerB : playerA;
 		player.outputStatus(out);
 	}
 	
 	private void start(InputStream in){
 		int i = 0;
-		while(playerA.canBeAttack() && playerB.canBeAttack()){
+		while(playerA.isLive(out)){
 			i++;
 			System.out.println("--------第"+i+"回合-------------");
 			playerA.attack(playerB, out);
 			wait123(2);
-			if(!playerB.canBeAttack()){
+			if(!playerB.isLive(out)){
 				break;
 			}
 			playerB.attack(playerA, out);
@@ -50,7 +50,7 @@ public class Game {
 			wait123(2);		
 			System.out.println();
 		}
-		Player player = playerA.canBeAttack() ? playerB : playerA;
+		Player player = playerA.isLive(out) ? playerB : playerA;
 		player.outputStatus(out);
 		System.out.println("输入bye结束游戏,按回车键游戏继续");
 	}

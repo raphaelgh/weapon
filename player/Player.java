@@ -15,36 +15,62 @@ public class Player {
 	protected String playerStatus="";
 	private final String role = "普通人";
 	protected Weapon affectWithWeapon = NULLWeapon.getInstance();
+	protected int protector;
 	
 	public Player(String name, int attackValue, int blood) {
 		this.name = (name != null ? name : "player");
 		this.attackValue = attackValue;
 		this.blood = blood;
+		this.protector = 0;
+	}
+	
+	protected int getProtector(){
+		return this.protector;
 	}
 
-	public boolean canBeAttack() {
+	public boolean isLive(PrintStream out) {
+		checkAffect(out);
 		return blood > 0;
 	}
 	
 	protected String getRole(){
 		return role;
 	}
+	
+	protected boolean canBeAttack(){
+		return this.playerStatus.indexOf(",无法攻击") == -1;
+	}
 
 	public void attack(Player playerB, PrintStream out) {
-		checkAffect(out);
-		if(this.playerStatus.indexOf(",无法攻击")!= -1){
+        //checkAffect(out);
+		if(!canBeAttack()){
 			this.affectWithWeapon.printStopAttackOnce(name, playerB.name, out);
 			this.playerStatus = this.playerStatus.replace(",无法攻击", "");
 			return;
 		}
+		beAttacked(playerB, out);
+//		playerB.beAttacked(attackValue, getRole()+name+"攻击了"+playerB.getRole()+playerB.name+",", out);
+	}
+	
+	protected void beAttacked(Player playerB, PrintStream out){
 		playerB.beAttacked(attackValue, getRole()+name+"攻击了"+playerB.getRole()+playerB.name+",", out);
 	}
 
+//	protected void beAttacked(int attackValue, String info, PrintStream out){
+//		blood = blood - attackValue;
+//		String attackStatus = this.affectWithWeapon.getWeaponAttributeName();
+//		attackStatus = ("".equals(attackStatus) ? attackStatus : name+attackStatus+",");
+//		out.println(info+name+"受到"+attackValue+"点伤害,"+attackStatus+
+//				name+"剩余生命:"+blood);
+//		playerStatus = (blood <= 0 ? DEFEATED : playerStatus);
+//	}
+
 	protected void beAttacked(int attackValue, String info, PrintStream out){
-		blood = blood - attackValue;
+		int value = (attackValue - this.getProtector()) < 0 ? 0 : (attackValue - this.getProtector());
+		blood = blood - value;
 		String attackStatus = this.affectWithWeapon.getWeaponAttributeName();
 		attackStatus = ("".equals(attackStatus) ? attackStatus : name+attackStatus+",");
-		out.println(info+name+"受到"+attackValue+"点伤害,"+attackStatus+
+		out.println(info+name+"受到"+value+"点伤害,"+attackStatus+
 				name+"剩余生命:"+blood);
 		playerStatus = blood <= 0 ? DEFEATED : playerStatus;
 	}
