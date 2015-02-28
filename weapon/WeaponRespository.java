@@ -21,7 +21,7 @@ public class WeaponRespository {
 	private Random random;
 	private static final int WEAPON_COUNTS = 20;
 	private static final int WEAPON_ATTACK_VALUE = 20;
-	private static final int ATTRIBUTE_COUNTS = 3;
+	private static final int ATTRIBUTE_COUNTS = 4;
 	private static final int ATTRIBUTE_TIMES = 5;
 	private static final int ATTRIBUTE_ATTACK_VALUE = 3;
 	
@@ -73,8 +73,8 @@ public class WeaponRespository {
 	
 	@SuppressWarnings("unchecked")
 	private Attribute generatorAttribute(Class<?> attr, Random random){
-		int times = random.nextInt(ATTRIBUTE_TIMES) + 1;
-		int specialAttackValue = random.nextInt(ATTRIBUTE_ATTACK_VALUE) + 1;
+		int times = (random.nextInt(ATTRIBUTE_TIMES) + 1);
+		int specialAttackValue = (random.nextInt(ATTRIBUTE_ATTACK_VALUE) + 1);
 		try {
 			Constructor<Attribute> constructor = (Constructor<Attribute>) attr.getDeclaredConstructor(int.class, int.class);
 			return constructor.newInstance(times, specialAttackValue);

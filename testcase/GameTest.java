@@ -13,8 +13,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.tw.trainning.fightergame.Game;
-import com.tw.trainning.fightergame.entity.Player;
-import com.tw.trainning.fightergame.entity.Soldier;
+import com.tw.trainning.fightergame.player.Player;
+import com.tw.trainning.fightergame.player.Soldier;
 import com.tw.trainning.fightergame.weapon.Weapon;
 import com.tw.trainning.fightergame.weapon.WeaponRespository;
 import com.tw.trainning.fightergame.weapon.attribute.Attribute;
@@ -26,6 +26,8 @@ import com.tw.trainning.fightergame.weapon.attribute.Poison;
 
 
 public class GameTest {
+	
+	private static final int ATTRIBUTE_RANGE = 4;
 	
 	PrintStream out = mock(PrintStream.class);
 	Random random;
@@ -115,7 +117,10 @@ public class GameTest {
 		.thenReturn(1)
 		.thenReturn(1);
 		
-		when(random.nextInt(7))
+		when(random.nextInt(9))
+		.thenReturn(1);
+		
+		when(random.nextInt(4))
 		.thenReturn(1);
 		
 		when(random.nextInt(5))
@@ -135,7 +140,7 @@ public class GameTest {
 	
 	@Test
 	public void should_soldier_use_weapon_with_poison_fight_with_person(){
-		when(random.nextInt(9))
+		when(random.nextInt(ATTRIBUTE_RANGE))
 		.thenReturn(0)
 		.thenReturn(1);
 		Attribute poison = new Poison("毒性", 2, 2);
@@ -155,7 +160,7 @@ public class GameTest {
 	@Test
 	public void should_soldier_use_weapon_with_poison_and_accumulation_fight_with_person(){
 		Random random = mock(Random.class);
-		when(random.nextInt(9))
+		when(random.nextInt(ATTRIBUTE_RANGE))
 		.thenReturn(0)
 		.thenReturn(0)
 		.thenReturn(1)
@@ -177,7 +182,6 @@ public class GameTest {
 		verify(out).println("张三受到4点毒性伤害,张三剩余生命:74");
 		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:80");
 		
-		verify(out).println("战士李四用优质毒箭攻击了普通人张三,张三受到10点伤害,张三剩余生命:64");
 		verify(out).println("张三受到4点毒性伤害,张三剩余生命:60");
 		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:70");
 		
@@ -205,7 +209,7 @@ public class GameTest {
 	
 	@Test
 	public void should_soldier_use_weapon_with_freeze_fight_with_person(){
-		when(random.nextInt(9))
+		when(random.nextInt(ATTRIBUTE_RANGE))
 		.thenReturn(0)
 		.thenReturn(1);
 		Attribute freeze = new Freeze("冰冻", 2);
@@ -230,7 +234,7 @@ public class GameTest {
 	
 	@Test
 	public void should_soldier_use_weapon_with_freeze_and_accumulation_fight_with_person(){
-		when(random.nextInt(9))
+		when(random.nextInt(ATTRIBUTE_RANGE))
 		.thenReturn(0)
 		.thenReturn(0)
 		.thenReturn(1)
@@ -277,7 +281,7 @@ public class GameTest {
 	
 	@Test
 	public void should_soldier_use_weapon_with_halo_fight_with_person(){
-		when(random.nextInt(9))
+		when(random.nextInt(ATTRIBUTE_RANGE))
 		.thenReturn(0)
 		.thenReturn(1);
 		Attribute halo = new Halo("晕锤", 2);
@@ -301,7 +305,7 @@ public class GameTest {
 	
 	@Test
 	public void should_soldier_use_weapon_with_halo_and_accumulation_fight_with_person(){
-		when(random.nextInt(9))
+		when(random.nextInt(ATTRIBUTE_RANGE))
 		.thenReturn(0)
 		.thenReturn(0)
 		.thenReturn(1)
@@ -351,7 +355,7 @@ public class GameTest {
 	
 	@Test
 	public void should_soldier_use_weapon_with_bust_fight_with_person(){
-		when(random.nextInt(9))
+		when(random.nextInt(ATTRIBUTE_RANGE))
 		.thenReturn(0)
 		.thenReturn(1);
 		Attribute bust = new Bust();
@@ -369,7 +373,7 @@ public class GameTest {
 	
 	@Test
 	public void should_soldier_use_weapon_with_bust_and_accumulation_fight_with_person(){
-		when(random.nextInt(9))
+		when(random.nextInt(ATTRIBUTE_RANGE))
 		.thenReturn(0)
 		.thenReturn(0)
 		.thenReturn(1)
@@ -409,14 +413,14 @@ public class GameTest {
 	@Test
 	public void should_soldier_use_weapon_with_fire_fight_with_soldier_use_weapon_with_freeze(){
 		Random fireRandom = mock(Random.class);
-		when(fireRandom.nextInt(9))
+		when(fireRandom.nextInt(ATTRIBUTE_RANGE))
 		.thenReturn(0)
 		.thenReturn(1)
 		.thenReturn(1)
 		.thenReturn(1);
 		
 		Random freezeRandom = mock(Random.class);
-		when(freezeRandom.nextInt(9))
+		when(freezeRandom.nextInt(ATTRIBUTE_RANGE))
 		.thenReturn(0)
 		.thenReturn(1)
 		.thenReturn(1)
@@ -451,14 +455,14 @@ public class GameTest {
 	@Test
 	public void should_soldier_use_weapon_with_poison_fight_with_soldier_use_weapon_with_halo(){
 		Random poisonRandom = mock(Random.class);
-		when(poisonRandom.nextInt(9))
+		when(poisonRandom.nextInt(ATTRIBUTE_RANGE))
 		.thenReturn(0)
 		.thenReturn(1)
 		.thenReturn(1)
 		.thenReturn(1);
 		
 		Random haloRandom = mock(Random.class);
-		when(haloRandom.nextInt(9))
+		when(haloRandom.nextInt(ATTRIBUTE_RANGE))
 		.thenReturn(0)
 		.thenReturn(1)
 		.thenReturn(1)
@@ -492,14 +496,14 @@ public class GameTest {
 	@Test
 	public void should_soldier_use_weapon_with_halo_fight_with_soldier_use_weapon_with_freeze(){
 		Random haloRandom = mock(Random.class);
-		when(haloRandom.nextInt(9))
+		when(haloRandom.nextInt(ATTRIBUTE_RANGE))
 		.thenReturn(0)
 		.thenReturn(1)
 		.thenReturn(1)
 		.thenReturn(1);
 		
 		Random freezeRandom = mock(Random.class);
-		when(freezeRandom.nextInt(9))
+		when(freezeRandom.nextInt(ATTRIBUTE_RANGE))
 		.thenReturn(0)
 		.thenReturn(1)
 		.thenReturn(1)
@@ -538,7 +542,7 @@ public class GameTest {
 	
 	@Test
 	public void should_weapon_with_two_different_attributes_and_start_one_by_one(){
-		when(random.nextInt(9))
+		when(random.nextInt(ATTRIBUTE_RANGE))
 		.thenReturn(0)
 		.thenReturn(2)
 		.thenReturn(3)
@@ -591,7 +595,7 @@ public class GameTest {
 	
 	@Test
 	public void should_weapon_with_two_different_attributes_and_cannot_accumlate_and_player_only_at_one_status(){
-		when(random.nextInt(9))
+		when(random.nextInt(ATTRIBUTE_RANGE))
 		.thenReturn(0)
 		.thenReturn(1)
 		.thenReturn(3)
@@ -643,7 +647,7 @@ public class GameTest {
 	
 	@Test
 	public void should_weapon_with_two_same_attributes_and_accumulate(){
-		when(random.nextInt(9))
+		when(random.nextInt(ATTRIBUTE_RANGE))
 		.thenReturn(0)
 		.thenReturn(1)
 		.thenReturn(3)
@@ -689,7 +693,7 @@ public class GameTest {
 	
 	@Test
 	public void should_weapon_with_one_attribute_and_bust_and_bust_not_influence_player_status(){
-		when(random.nextInt(9))
+		when(random.nextInt(ATTRIBUTE_RANGE))
 		.thenReturn(0)
 		.thenReturn(1)
 		.thenReturn(3)

@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-import com.tw.trainning.fightergame.entity.Player;
+import com.tw.trainning.fightergame.player.Player;
 import com.tw.trainning.fightergame.weapon.attribute.Attribute;
 import com.tw.trainning.fightergame.weapon.attribute.Bust;
 import com.tw.trainning.fightergame.weapon.attribute.NULLAttribute;
@@ -41,7 +41,7 @@ public class Weapon{
 	}
 	
 	private Attribute selectAttribute(Random random){
-		int index = random.nextInt(9);
+		int index = random.nextInt(4);
 		try{
 			return attrList.get(index);
 		}
@@ -92,6 +92,7 @@ public class Weapon{
 		attrList.add(freeze);
 	}
 	
+	//0+1=1, 1+0=1, 1+2=2, 1+2=3, not exist: 1+2=1
 	public int accumulate(Weapon affectWithWeapon) {
 		Attribute selected = selectAttribute(random);		
 		this.extraHarm = affectWithWeapon.accumulate(selected);
@@ -101,9 +102,14 @@ public class Weapon{
 	}
 
 	protected Attribute accumulate(Attribute another) {
-		boolean isNextHarmNULL = NULLAttribute.class.equals(another.getClass()) || Bust.class.equals(another.getClass());
+		boolean isNextHarmNULL = NULLAttribute.class.equals(another.getClass()) || Bust.class.equals(another.getClass()); //right is 0
 		boolean possibility = !isNextHarmNULL && ((NULLAttribute.class.equals(this.extraHarm.getClass()) || this.extraHarm.getClass().equals(another.getClass())));
-		return (possibility ? this.extraHarm.accumulate(another) : (isNextHarmNULL ? this.extraHarm : another));
+		Attribute attr = (possibility ? this.extraHarm.accumulate(another) : (isNextHarmNULL ? this.extraHarm : another));
+		//not the same attribute replace
+		if(attr == another){
+			this.extraHarm.reset();
+		}
+		return attr;
 	}
 	
 	public String getWeaponAttributeName() {

@@ -1,14 +1,13 @@
 package com.tw.trainning.fightergame;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.Random;
 
-import com.tw.trainning.fightergame.entity.Player;
-import com.tw.trainning.fightergame.entity.Soldier;
+import com.tw.trainning.fightergame.player.Player;
+import com.tw.trainning.fightergame.player.Soldier;
 import com.tw.trainning.fightergame.weapon.Weapon;
 import com.tw.trainning.fightergame.weapon.WeaponRespository;
 
@@ -37,32 +36,60 @@ public class Game {
 	}
 	
 	private void start(InputStream in){
+		int i = 0;
 		while(playerA.canBeAttack() && playerB.canBeAttack()){
+			i++;
+			System.out.println("--------第"+i+"回合-------------");
 			playerA.attack(playerB, out);
-			continue123(in);
+			wait123(2);
 			if(!playerB.canBeAttack()){
 				break;
 			}
 			playerB.attack(playerA, out);
-			continue123(in);
+			//continue123(in);
+			wait123(2);		
+			System.out.println();
 		}
 		Player player = playerA.canBeAttack() ? playerB : playerA;
 		player.outputStatus(out);
+		System.out.println("输入bye结束游戏,按回车键游戏继续");
 	}
 	
-	private void continue123(InputStream in){
-		System.err.println("按回车键继续...");
+	private void wait123(int seconds){
 		try {
-			in.read();
-		} catch (IOException e) {				
+			Thread.sleep(seconds*1000);			
+		} catch (InterruptedException e) {
+
 		}
 	}
 	
+//	private void continue123(InputStream in){
+//		System.err.println("按回车键继续...");
+//		try {
+//			in.read();
+//		} catch (IOException e) {				
+//		}
+//	}
+	
 	public static void main(String[] args){		
 		Random random = new Random();
-		WeaponRespository weaponRes = new WeaponRespository(random);		
-		Game game = gameGenerator(random, weaponRes);
-		game.start(System.in);		
+		WeaponRespository weaponRes = new WeaponRespository(random);	
+		Game game;
+		System.out.println("按回车键游戏开始");
+		while(!isBye()){
+			game = gameGenerator(random, weaponRes);
+			game.start(System.in);
+		}		
+	}
+	
+	private static boolean isBye(){
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+		try{
+			return "bye".equalsIgnoreCase(in.readLine());
+		}
+		catch(Exception e){
+			return true;
+		}
 	}
 	
 	private static Game gameGenerator(Random random, WeaponRespository weaponRes){

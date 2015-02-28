@@ -42,17 +42,21 @@ public class Attribute {
 	@SuppressWarnings("unchecked")
 	public Attribute accumulate(Attribute another){
 		int times = another.accumulateTimes(this.times);
-		int specialAttackValue = another.accumulateAttackValue(this.specialAttackValue);
+		int value = (this.times == 0 ? another.accumulateAttackValue(0) : another.accumulateAttackValue(this.specialAttackValue));
+		//the same attribute replace
+		if(this.times == 0){
+			reset();
+		}
 		try {
 			Constructor<Attribute> constructor = (Constructor<Attribute>) this.getClass().getDeclaredConstructor(String.class, int.class, int.class);
-			return constructor.newInstance(this.name, times, specialAttackValue);
+			return constructor.newInstance(this.name, times, value);
 		} catch (Exception e) {
 			return this;
 		} 
 	}
 	
 	public int affectBlood(String name, int blood, String status, PrintStream out) {
-		specialAttackValue = reset(times);
+		//specialAttackValue = reset(times);
 		if(times == 0){
 			return blood;
 		}
@@ -62,9 +66,9 @@ public class Attribute {
 		return blood-specialAttackValue;
 	}
 	
-	private int reset(int times){
-		return (times == 0 ? 0 : specialAttackValue);
-	}
+//	private int reset(int times){
+//		return (times == 0 ? 0 : specialAttackValue);
+//	}
 	
 	protected int accumulateTimes(int record){
 		return this.recordTimes+record;
@@ -121,5 +125,9 @@ public class Attribute {
 
 	public void setPossible(boolean possible) {
 		this.possible = possible;	
+	}
+
+	public void reset() {
+		this.times = this.recordTimes;		
 	}
 }

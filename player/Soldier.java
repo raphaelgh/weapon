@@ -1,4 +1,4 @@
-package com.tw.trainning.fightergame.entity;
+package com.tw.trainning.fightergame.player;
 
 import java.io.PrintStream;
 import com.tw.trainning.fightergame.weapon.Weapon;
