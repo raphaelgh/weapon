@@ -57,7 +57,7 @@ public class Attribute {
 	
 	public int affectBlood(String name, int blood, String status, PrintStream out) {
 		//specialAttackValue = reset(times);
-		if(times == 0){
+		if(times == 0 || blood <=0){
 			return blood;
 		}
 		out.println(name+"ÊÜµ½"+specialAttackValue+"µã"+this.nameToString()+"ÉËº¦,"+

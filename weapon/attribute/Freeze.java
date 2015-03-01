@@ -30,7 +30,7 @@ public class Freeze extends Attribute{
 	
 	@Override
 	public int affectBlood(String name, int blood, String status, PrintStream out) {
-		times = (times == 0 ? 0 : --times);
+		times = (times <= 0 ? 0 : --times);
 		return blood;
 	}
 	

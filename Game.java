@@ -36,10 +36,9 @@ public class Game {
 	}
 	
 	private void start(InputStream in){
-		int i = 0;
-		while(playerA.isLive(out)){
-			i++;
-			System.out.println("--------第"+i+"回合-------------");
+		int i = 1;
+		System.out.println("--------第"+i+"回合-------------");
+		while(playerA.isLive(out)){						
 			playerA.attack(playerB, out);
 			wait123(2);
 			if(!playerB.isLive(out)){
@@ -48,7 +47,9 @@ public class Game {
 			playerB.attack(playerA, out);
 			//continue123(in);
 			wait123(2);		
+			i++;
 			System.out.println();
+			System.out.println("--------第"+i+"回合-------------");
 		}
 		Player player = playerA.isLive(out) ? playerB : playerA;
 		player.outputStatus(out);

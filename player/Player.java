@@ -29,8 +29,8 @@ public class Player {
 	}
 
 	public boolean isLive(PrintStream out) {
-		checkAffect(out);
-		return blood > 0;
+		return checkAffect(out) > 0;
+//		return blood > 0;
 	}
 	
 	protected String getRole(){
@@ -42,28 +42,17 @@ public class Player {
 	}
 
 	public void attack(Player playerB, PrintStream out) {
-        //checkAffect(out);
 		if(!canBeAttack()){
 			this.affectWithWeapon.printStopAttackOnce(name, playerB.name, out);
 			this.playerStatus = this.playerStatus.replace(",无法攻击", "");
 			return;
 		}
-		beAttacked(playerB, out);
-//		playerB.beAttacked(attackValue, getRole()+name+"攻击了"+playerB.getRole()+playerB.name+",", out);
+		this.beAttacked(playerB, out);
 	}
 	
 	protected void beAttacked(Player playerB, PrintStream out){
 		playerB.beAttacked(attackValue, getRole()+name+"攻击了"+playerB.getRole()+playerB.name+",", out);
 	}
-
-//	protected void beAttacked(int attackValue, String info, PrintStream out){
-//		blood = blood - attackValue;
-//		String attackStatus = this.affectWithWeapon.getWeaponAttributeName();
-//		attackStatus = ("".equals(attackStatus) ? attackStatus : name+attackStatus+",");
-//		out.println(info+name+"受到"+attackValue+"点伤害,"+attackStatus+
-//				name+"剩余生命:"+blood);
-//		playerStatus = (blood <= 0 ? DEFEATED : playerStatus);
-//	}
 
 	protected void beAttacked(int attackValue, String info, PrintStream out){
 		int value = (attackValue - this.getProtector()) < 0 ? 0 : (attackValue - this.getProtector());
@@ -82,8 +71,10 @@ public class Player {
 		return intensifiedWeaponAttackValue;
 	}	
 	
-	protected void checkAffect(PrintStream out) {
+	protected int checkAffect(PrintStream out) {
 		blood = affectWithWeapon.affectBlood(name, blood, playerStatus, out);
+		playerStatus = blood <= 0 ? DEFEATED : playerStatus;
+		return blood;
 	}
 
 	public void outputStatus(PrintStream out) {

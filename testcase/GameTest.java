@@ -1,8 +1,8 @@
 package com.tw.trainning.fightergame.testcase;
 
+import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -11,7 +11,7 @@ import java.util.Random;
 
 import org.junit.Before;
 import org.junit.Test;
-
+import org.mockito.InOrder;
 import com.tw.trainning.fightergame.Game;
 import com.tw.trainning.fightergame.player.Player;
 import com.tw.trainning.fightergame.player.Soldier;
@@ -30,6 +30,7 @@ public class GameTest {
 	private static final int ATTRIBUTE_RANGE = 4;
 	
 	PrintStream out = mock(PrintStream.class);
+	InOrder inorder = inOrder(out);
 	Random random;
 	
 	@Before
@@ -44,7 +45,7 @@ public class GameTest {
 		Player playerB = new Player("张三", 20, 100);
 		Game game = new Game(playerA, playerB, out);
 		game.start();
-		verify(out).println("张三被打败了");
+		inorder.verify(out).println("张三被打败了");
 	}
 	
 	//*-------------------------first problem finished------------------------------------------------
@@ -73,10 +74,10 @@ public class GameTest {
 		Player playerB = new Player("张三", 30, 100);
 		Game game = new Game(playerA, playerB, out);
 		game.start();
-		verify(out).println("战士李四用优质木棒攻击了普通人张三,张三受到50点伤害,张三剩余生命:50");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:90");
-		verify(out).println("战士李四用优质木棒攻击了普通人张三,张三受到50点伤害,张三剩余生命:0");
-		verify(out).println("张三被打败了");
+		inorder.verify(out).println("战士李四用优质木棒攻击了普通人张三,张三受到50点伤害,张三剩余生命:50");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:90");
+		inorder.verify(out).println("战士李四用优质木棒攻击了普通人张三,张三受到50点伤害,张三剩余生命:0");
+		inorder.verify(out).println("张三被打败了");
 	}
 	
 	@Test
@@ -85,12 +86,12 @@ public class GameTest {
 		Player playerB = new Player("张三", 30, 100);
 		Game game = new Game(playerA, playerB, out);
 		game.start();
-		verify(out).println("普通人李四攻击了普通人张三,张三受到40点伤害,张三剩余生命:60");
-		verify(out).println("普通人张三攻击了普通人李四,李四受到30点伤害,李四剩余生命:70");
-		verify(out).println("普通人李四攻击了普通人张三,张三受到40点伤害,张三剩余生命:20");
-		verify(out).println("普通人张三攻击了普通人李四,李四受到30点伤害,李四剩余生命:40");
-		verify(out).println("普通人李四攻击了普通人张三,张三受到40点伤害,张三剩余生命:-20");
-		verify(out).println("张三被打败了");
+		inorder.verify(out).println("普通人李四攻击了普通人张三,张三受到40点伤害,张三剩余生命:60");
+		inorder.verify(out).println("普通人张三攻击了普通人李四,李四受到30点伤害,李四剩余生命:70");
+		inorder.verify(out).println("普通人李四攻击了普通人张三,张三受到40点伤害,张三剩余生命:20");
+		inorder.verify(out).println("普通人张三攻击了普通人李四,李四受到30点伤害,李四剩余生命:40");
+		inorder.verify(out).println("普通人李四攻击了普通人张三,张三受到40点伤害,张三剩余生命:-20");
+		inorder.verify(out).println("张三被打败了");
 	}
 	
 	@Test
@@ -102,11 +103,11 @@ public class GameTest {
 		Soldier playerB = new Soldier("张三", 30, 100, sword, 20);
 		Game game = new Game(playerA, playerB, out);
 		game.start();
-		verify(out).println("战士李四用优质木棒攻击了战士张三,张三受到30点伤害,张三剩余生命:70");
-		verify(out).println("战士张三用利剑攻击了战士李四,李四受到50点伤害,李四剩余生命:50");
-		verify(out).println("战士李四用优质木棒攻击了战士张三,张三受到30点伤害,张三剩余生命:40");
-		verify(out).println("战士张三用利剑攻击了战士李四,李四受到50点伤害,李四剩余生命:0");
-		verify(out).println("李四被打败了");
+		inorder.verify(out).println("战士李四用优质木棒攻击了战士张三,张三受到30点伤害,张三剩余生命:70");
+		inorder.verify(out).println("战士张三用利剑攻击了战士李四,李四受到50点伤害,李四剩余生命:50");
+		inorder.verify(out).println("战士李四用优质木棒攻击了战士张三,张三受到30点伤害,张三剩余生命:40");
+		inorder.verify(out).println("战士张三用利剑攻击了战士李四,李四受到50点伤害,李四剩余生命:0");
+		inorder.verify(out).println("李四被打败了");
 	}
 	
 	//*---------------------------third problem finished----------------------------------------------
@@ -150,11 +151,11 @@ public class GameTest {
 		Player playerB = new Player("张三", 30, 100);
 		Game game = new Game(playerA, playerB, out);
 		game.start();
-		verify(out).println("战士李四用优质毒箭攻击了普通人张三,张三受到50点伤害,张三中毒了,张三剩余生命:50");
-		verify(out).println("张三受到2点毒性伤害,张三剩余生命:48");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:90");
-		verify(out).println("战士李四用优质毒箭攻击了普通人张三,张三受到50点伤害,张三剩余生命:-2");
-		verify(out).println("张三被打败了");
+		inorder.verify(out).println("战士李四用优质毒箭攻击了普通人张三,张三受到50点伤害,张三中毒了,张三剩余生命:50");
+		inorder.verify(out).println("张三受到2点毒性伤害,张三剩余生命:48");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:90");
+		inorder.verify(out).println("战士李四用优质毒箭攻击了普通人张三,张三受到50点伤害,张三剩余生命:-2");
+		inorder.verify(out).println("张三被打败了");
 	}
 	
 	@Test
@@ -174,37 +175,37 @@ public class GameTest {
 		Player playerB = new Player("张三", 30, 100);
 		Game game = new Game(playerA, playerB, out);
 		game.start();
-		verify(out).println("战士李四用优质毒箭攻击了普通人张三,张三受到10点伤害,张三中毒了,张三剩余生命:90");
-		verify(out).println("张三受到2点毒性伤害,张三剩余生命:88");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:90");
+		inorder.verify(out).println("战士李四用优质毒箭攻击了普通人张三,张三受到10点伤害,张三中毒了,张三剩余生命:90");
+		inorder.verify(out).println("张三受到2点毒性伤害,张三剩余生命:88");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:90");
 		
-		verify(out).println("战士李四用优质毒箭攻击了普通人张三,张三受到10点伤害,张三中毒了,张三剩余生命:78");
-		verify(out).println("张三受到4点毒性伤害,张三剩余生命:74");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:80");
+		inorder.verify(out).println("战士李四用优质毒箭攻击了普通人张三,张三受到10点伤害,张三中毒了,张三剩余生命:78");
+		inorder.verify(out).println("张三受到4点毒性伤害,张三剩余生命:74");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:80");
 		
-		verify(out).println("张三受到4点毒性伤害,张三剩余生命:60");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:70");
+		inorder.verify(out).println("张三受到4点毒性伤害,张三剩余生命:60");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:70");
 		
-		verify(out).println("战士李四用优质毒箭攻击了普通人张三,张三受到10点伤害,张三剩余生命:50");
-		verify(out).println("张三受到4点毒性伤害,张三剩余生命:46");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:60");
+		inorder.verify(out).println("战士李四用优质毒箭攻击了普通人张三,张三受到10点伤害,张三剩余生命:50");
+		inorder.verify(out).println("张三受到4点毒性伤害,张三剩余生命:46");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:60");
 		
-		verify(out).println("战士李四用优质毒箭攻击了普通人张三,张三受到10点伤害,张三剩余生命:36");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:50");
+		inorder.verify(out).println("战士李四用优质毒箭攻击了普通人张三,张三受到10点伤害,张三剩余生命:36");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:50");
 		
-		verify(out).println("战士李四用优质毒箭攻击了普通人张三,张三受到10点伤害,张三中毒了,张三剩余生命:26");
-		verify(out).println("张三受到2点毒性伤害,张三剩余生命:24");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:40");
+		inorder.verify(out).println("战士李四用优质毒箭攻击了普通人张三,张三受到10点伤害,张三中毒了,张三剩余生命:26");
+		inorder.verify(out).println("张三受到2点毒性伤害,张三剩余生命:24");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:40");
 		
-		verify(out).println("战士李四用优质毒箭攻击了普通人张三,张三受到10点伤害,张三剩余生命:14");
-		verify(out).println("张三受到2点毒性伤害,张三剩余生命:12");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:30");
+		inorder.verify(out).println("战士李四用优质毒箭攻击了普通人张三,张三受到10点伤害,张三剩余生命:14");
+		inorder.verify(out).println("张三受到2点毒性伤害,张三剩余生命:12");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:30");
 		
-		verify(out).println("战士李四用优质毒箭攻击了普通人张三,张三受到10点伤害,张三剩余生命:2");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:20");
+		inorder.verify(out).println("战士李四用优质毒箭攻击了普通人张三,张三受到10点伤害,张三剩余生命:2");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:20");
 		
-		verify(out).println("战士李四用优质毒箭攻击了普通人张三,张三受到10点伤害,张三剩余生命:-8");
-		verify(out).println("张三被打败了");
+		inorder.verify(out).println("战士李四用优质毒箭攻击了普通人张三,张三受到10点伤害,张三剩余生命:-8");
+		inorder.verify(out).println("张三被打败了");
 	}
 	
 	@Test
@@ -218,18 +219,18 @@ public class GameTest {
 		Player playerB = new Player("张三", 20, 100);
 		Game game = new Game(playerA, playerB, out);
 		game.start();
-		verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到30点伤害,张三冻僵了,张三剩余生命:70");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:90");
+		inorder.verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到30点伤害,张三冻僵了,张三剩余生命:70");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:90");
 		
-		verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到30点伤害,张三剩余生命:40");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:80");
+		inorder.verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到30点伤害,张三剩余生命:40");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:80");
 		
-		verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到30点伤害,张三剩余生命:10");		
-		verify(out).println("张三冻得直哆嗦,没有击中李四");
+		inorder.verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到30点伤害,张三剩余生命:10");		
+		inorder.verify(out).println("张三冻得直哆嗦,没有击中李四");
 		verify(out, never()).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:70");
 		
-		verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到30点伤害,张三剩余生命:-20");
-		verify(out).println("张三被打败了");
+		inorder.verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到30点伤害,张三剩余生命:-20");
+		inorder.verify(out).println("张三被打败了");
 	}
 	
 	@Test
@@ -248,35 +249,35 @@ public class GameTest {
 		Player playerB = new Player("张三", 20, 100);
 		Game game = new Game(playerA, playerB, out);
 		game.start();
-		verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到10点伤害,张三冻僵了,张三剩余生命:90");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:90");
+		inorder.verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到10点伤害,张三冻僵了,张三剩余生命:90");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:90");
 		
-		verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到10点伤害,张三冻僵了,张三剩余生命:80");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:80");
+		inorder.verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到10点伤害,张三冻僵了,张三剩余生命:80");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:80");
 		
-		verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:70");		
-		verify(out, times(3)).println("张三冻得直哆嗦,没有击中李四");
+		inorder.verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:70");		
+		inorder.verify(out).println("张三冻得直哆嗦,没有击中李四");
 		
-		verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:60");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:70");
+		inorder.verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:60");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:70");
 		
-		verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:50");
-		verify(out, times(3)).println("张三冻得直哆嗦,没有击中李四");
+		inorder.verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:50");
+		inorder.verify(out).println("张三冻得直哆嗦,没有击中李四");
 		
-		verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到10点伤害,张三冻僵了,张三剩余生命:40");		
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:60");
+		inorder.verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到10点伤害,张三冻僵了,张三剩余生命:40");		
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:60");
 		
-		verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:30");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:50");
+		inorder.verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:30");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:50");
 		
-		verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:20");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:40");
+		inorder.verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:20");
+		inorder.verify(out).println("张三冻得直哆嗦,没有击中李四");		
 		
-		verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:10");
-		verify(out, times(3)).println("张三冻得直哆嗦,没有击中李四");
+		inorder.verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:10");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:40");
 		
-		verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:0");
-		verify(out).println("张三被打败了");
+		inorder.verify(out).println("战士李四用寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:0");
+		inorder.verify(out).println("张三被打败了");
 	}
 	
 	@Test
@@ -290,17 +291,17 @@ public class GameTest {
 		Player playerB = new Player("张三", 20, 100);
 		Game game = new Game(playerA, playerB, out);
 		game.start();
-		verify(out).println("战士李四用晕锤攻击了普通人张三,张三受到30点伤害,张三晕倒了,张三剩余生命:70");
-		verify(out).println("张三晕倒了,无法攻击,眩晕还剩:1轮");
+		inorder.verify(out).println("战士李四用晕锤攻击了普通人张三,张三受到30点伤害,张三晕倒了,张三剩余生命:70");
+		inorder.verify(out).println("张三晕倒了,无法攻击,眩晕还剩:1轮");
 		
-		verify(out).println("战士李四用晕锤攻击了普通人张三,张三受到30点伤害,张三剩余生命:40");
-		verify(out).println("张三晕倒了,无法攻击,眩晕还剩:0轮");
+		inorder.verify(out).println("战士李四用晕锤攻击了普通人张三,张三受到30点伤害,张三剩余生命:40");
+		inorder.verify(out).println("张三晕倒了,无法攻击,眩晕还剩:0轮");
 		
-		verify(out).println("战士李四用晕锤攻击了普通人张三,张三受到30点伤害,张三剩余生命:10");		
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:90");
+		inorder.verify(out).println("战士李四用晕锤攻击了普通人张三,张三受到30点伤害,张三剩余生命:10");		
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:90");
 		
-		verify(out).println("战士李四用晕锤攻击了普通人张三,张三受到30点伤害,张三剩余生命:-20");
-		verify(out).println("张三被打败了");
+		inorder.verify(out).println("战士李四用晕锤攻击了普通人张三,张三受到30点伤害,张三剩余生命:-20");
+		inorder.verify(out).println("张三被打败了");
 	}
 	
 	@Test
@@ -322,35 +323,35 @@ public class GameTest {
 		Player playerB = new Player("张三", 20, 100);
 		Game game = new Game(playerA, playerB, out);
 		game.start();
-		verify(out).println("战士李四用晕锤攻击了普通人张三,张三受到10点伤害,张三晕倒了,张三剩余生命:90");
-		verify(out, times(3)).println("张三晕倒了,无法攻击,眩晕还剩:1轮");
+		inorder.verify(out).println("战士李四用晕锤攻击了普通人张三,张三受到10点伤害,张三晕倒了,张三剩余生命:90");
+		inorder.verify(out).println("张三晕倒了,无法攻击,眩晕还剩:1轮");
 		
-		verify(out).println("战士李四用晕锤攻击了普通人张三,张三受到10点伤害,张三晕倒了,张三剩余生命:80");
-		verify(out).println("张三晕倒了,无法攻击,眩晕还剩:2轮");
+		inorder.verify(out).println("战士李四用晕锤攻击了普通人张三,张三受到10点伤害,张三晕倒了,张三剩余生命:80");
+		inorder.verify(out).println("张三晕倒了,无法攻击,眩晕还剩:2轮");
 		
-		verify(out).println("战士李四用晕锤攻击了普通人张三,张三受到10点伤害,张三剩余生命:70");		
-		verify(out, times(3)).println("张三晕倒了,无法攻击,眩晕还剩:1轮");
+		inorder.verify(out).println("战士李四用晕锤攻击了普通人张三,张三受到10点伤害,张三剩余生命:70");		
+		inorder.verify(out).println("张三晕倒了,无法攻击,眩晕还剩:1轮");
 		
-		verify(out).println("战士李四用晕锤攻击了普通人张三,张三受到10点伤害,张三剩余生命:60");
-		verify(out, times(2)).println("张三晕倒了,无法攻击,眩晕还剩:0轮");
+		inorder.verify(out).println("战士李四用晕锤攻击了普通人张三,张三受到10点伤害,张三剩余生命:60");
+		inorder.verify(out).println("张三晕倒了,无法攻击,眩晕还剩:0轮");
 		
-		verify(out).println("战士李四用晕锤攻击了普通人张三,张三受到10点伤害,张三剩余生命:50");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:90");
+		inorder.verify(out).println("战士李四用晕锤攻击了普通人张三,张三受到10点伤害,张三剩余生命:50");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:90");
 		
-		verify(out).println("战士李四用晕锤攻击了普通人张三,张三受到10点伤害,张三晕倒了,张三剩余生命:40");
-		verify(out, times(3)).println("张三晕倒了,无法攻击,眩晕还剩:1轮");
+		inorder.verify(out).println("战士李四用晕锤攻击了普通人张三,张三受到10点伤害,张三晕倒了,张三剩余生命:40");
+		inorder.verify(out).println("张三晕倒了,无法攻击,眩晕还剩:1轮");
 		
-		verify(out).println("战士李四用晕锤攻击了普通人张三,张三受到10点伤害,张三剩余生命:30");
-		verify(out, times(2)).println("张三晕倒了,无法攻击,眩晕还剩:0轮");
+		inorder.verify(out).println("战士李四用晕锤攻击了普通人张三,张三受到10点伤害,张三剩余生命:30");
+		inorder.verify(out).println("张三晕倒了,无法攻击,眩晕还剩:0轮");
 		
-		verify(out).println("战士李四用晕锤攻击了普通人张三,张三受到10点伤害,张三剩余生命:20");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:80");
+		inorder.verify(out).println("战士李四用晕锤攻击了普通人张三,张三受到10点伤害,张三剩余生命:20");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:80");
 		
-		verify(out).println("战士李四用晕锤攻击了普通人张三,张三受到10点伤害,张三剩余生命:10");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:70");
+		inorder.verify(out).println("战士李四用晕锤攻击了普通人张三,张三受到10点伤害,张三剩余生命:10");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:70");
 		
-		verify(out).println("战士李四用晕锤攻击了普通人张三,张三受到10点伤害,张三剩余生命:0");		
-		verify(out).println("张三被打败了");
+		inorder.verify(out).println("战士李四用晕锤攻击了普通人张三,张三受到10点伤害,张三剩余生命:0");		
+		inorder.verify(out).println("张三被打败了");
 	}
 	
 	@Test
@@ -364,11 +365,11 @@ public class GameTest {
 		Player playerB = new Player("张三", 20, 100);
 		Game game = new Game(playerA, playerB, out);
 		game.start();
-		verify(out).println("战士李四用利剑攻击了普通人张三,李四发动了全力一击,张三受到70点伤害,张三剩余生命:30");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:90");
+		inorder.verify(out).println("战士李四用利剑攻击了普通人张三,李四发动了全力一击,张三受到70点伤害,张三剩余生命:30");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:90");
 		
-		verify(out).println("战士李四用利剑攻击了普通人张三,张三受到30点伤害,张三剩余生命:0");
-		verify(out).println("张三被打败了");
+		inorder.verify(out).println("战士李四用利剑攻击了普通人张三,张三受到30点伤害,张三剩余生命:0");
+		inorder.verify(out).println("张三被打败了");
 	}
 	
 	@Test
@@ -387,27 +388,27 @@ public class GameTest {
 		Player playerB = new Player("张三", 20, 100);
 		Game game = new Game(playerA, playerB, out);
 		game.start();
-		verify(out).println("战士李四用利剑攻击了普通人张三,李四发动了全力一击,张三受到20点伤害,张三剩余生命:80");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:90");
+		inorder.verify(out).println("战士李四用利剑攻击了普通人张三,李四发动了全力一击,张三受到20点伤害,张三剩余生命:80");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:90");
 		
-		verify(out).println("战士李四用利剑攻击了普通人张三,李四发动了全力一击,张三受到20点伤害,张三剩余生命:60");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:80");
+		inorder.verify(out).println("战士李四用利剑攻击了普通人张三,李四发动了全力一击,张三受到20点伤害,张三剩余生命:60");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:80");
 		
-		verify(out).println("战士李四用利剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:50");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:70");
+		inorder.verify(out).println("战士李四用利剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:50");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:70");
 		
-		verify(out).println("战士李四用利剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:40");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:60");
+		inorder.verify(out).println("战士李四用利剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:40");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:60");
 		
-		verify(out).println("战士李四用利剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:30");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:50");
+		inorder.verify(out).println("战士李四用利剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:30");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:50");
 		
-		verify(out).println("战士李四用利剑攻击了普通人张三,李四发动了全力一击,张三受到20点伤害,张三剩余生命:10");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:60");
+		inorder.verify(out).println("战士李四用利剑攻击了普通人张三,李四发动了全力一击,张三受到20点伤害,张三剩余生命:10");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:40");
 		
-		verify(out).println("战士李四用利剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:0");
+		inorder.verify(out).println("战士李四用利剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:0");
 		
-		verify(out).println("张三被打败了");
+		inorder.verify(out).println("张三被打败了");
 	}
 	
 	@Test
@@ -434,22 +435,22 @@ public class GameTest {
 		Soldier playerB = new Soldier("张三", 20, 100, freezeWeapon, 10);
 		Game game = new Game(playerA, playerB, out);
 		game.start();
-		verify(out).println("战士李四用火焰剑攻击了战士张三,张三受到15点伤害,张三烧伤了,张三剩余生命:85");
-		verify(out).println("张三受到2点烧伤伤害,张三剩余生命:83");
-		verify(out).println("战士张三用冰刀攻击了战士李四,李四受到30点伤害,李四冻僵了,李四剩余生命:70");
+		inorder.verify(out).println("战士李四用火焰剑攻击了战士张三,张三受到15点伤害,张三烧伤了,张三剩余生命:85");
+		inorder.verify(out).println("张三受到2点烧伤伤害,张三剩余生命:83");
+		inorder.verify(out).println("战士张三用冰刀攻击了战士李四,李四受到30点伤害,李四冻僵了,李四剩余生命:70");
 		
-		verify(out).println("战士李四用火焰剑攻击了战士张三,张三受到15点伤害,张三剩余生命:68");
-		verify(out).println("张三受到2点烧伤伤害,张三剩余生命:66");
-		verify(out).println("战士张三用冰刀攻击了战士李四,李四受到30点伤害,李四剩余生命:40");
+		inorder.verify(out).println("战士李四用火焰剑攻击了战士张三,张三受到15点伤害,张三剩余生命:68");
+		inorder.verify(out).println("张三受到2点烧伤伤害,张三剩余生命:66");
+		inorder.verify(out).println("战士张三用冰刀攻击了战士李四,李四受到30点伤害,李四剩余生命:40");
 		
-		verify(out).println("战士李四用火焰剑攻击了战士张三,张三受到15点伤害,张三剩余生命:51");
-		verify(out).println("张三受到2点烧伤伤害,张三剩余生命:49");
-		verify(out).println("战士张三用冰刀攻击了战士李四,李四受到30点伤害,李四剩余生命:10");
+		inorder.verify(out).println("战士李四用火焰剑攻击了战士张三,张三受到15点伤害,张三剩余生命:51");
+		inorder.verify(out).println("张三受到2点烧伤伤害,张三剩余生命:49");
+		inorder.verify(out).println("战士张三用冰刀攻击了战士李四,李四受到30点伤害,李四剩余生命:10");
 		
-		verify(out).println("李四冻得直哆嗦,没有击中张三");
-		verify(out).println("战士张三用冰刀攻击了战士李四,李四受到30点伤害,李四剩余生命:-20");
+		inorder.verify(out).println("李四冻得直哆嗦,没有击中张三");
+		inorder.verify(out).println("战士张三用冰刀攻击了战士李四,李四受到30点伤害,李四剩余生命:-20");
 		
-		verify(out).println("李四被打败了");
+		inorder.verify(out).println("李四被打败了");
 	}
 	
 	@Test
@@ -476,21 +477,21 @@ public class GameTest {
 		Soldier playerB = new Soldier("张三", 20, 100, haloWeapon, 10);
 		Game game = new Game(playerA, playerB, out);
 		game.start();
-		verify(out).println("战士李四用毒剑攻击了战士张三,张三受到15点伤害,张三中毒了,张三剩余生命:85");
-		verify(out).println("张三受到2点毒性伤害,张三剩余生命:83");
-		verify(out).println("战士张三用晕锤攻击了战士李四,李四受到30点伤害,李四晕倒了,李四剩余生命:70");
+		inorder.verify(out).println("战士李四用毒剑攻击了战士张三,张三受到15点伤害,张三中毒了,张三剩余生命:85");
+		inorder.verify(out).println("张三受到2点毒性伤害,张三剩余生命:83");
+		inorder.verify(out).println("战士张三用晕锤攻击了战士李四,李四受到30点伤害,李四晕倒了,李四剩余生命:70");
 		
-		verify(out).println("李四晕倒了,无法攻击,眩晕还剩:1轮");
-		verify(out).println("张三受到2点毒性伤害,张三剩余生命:81");
-		verify(out).println("战士张三用晕锤攻击了战士李四,李四受到30点伤害,李四剩余生命:40");
+		inorder.verify(out).println("李四晕倒了,无法攻击,眩晕还剩:1轮");
+		inorder.verify(out).println("张三受到2点毒性伤害,张三剩余生命:81");
+		inorder.verify(out).println("战士张三用晕锤攻击了战士李四,李四受到30点伤害,李四剩余生命:40");
 		
-		verify(out).println("李四晕倒了,无法攻击,眩晕还剩:0轮");
-		verify(out).println("战士张三用晕锤攻击了战士李四,李四受到30点伤害,李四剩余生命:10");
+		inorder.verify(out).println("李四晕倒了,无法攻击,眩晕还剩:0轮");
+		inorder.verify(out).println("战士张三用晕锤攻击了战士李四,李四受到30点伤害,李四剩余生命:10");
 		
-		verify(out).println("战士李四用毒剑攻击了战士张三,张三受到15点伤害,张三剩余生命:66");
-		verify(out).println("战士张三用晕锤攻击了战士李四,李四受到30点伤害,李四剩余生命:-20");
+		inorder.verify(out).println("战士李四用毒剑攻击了战士张三,张三受到15点伤害,张三剩余生命:66");
+		inorder.verify(out).println("战士张三用晕锤攻击了战士李四,李四受到30点伤害,李四剩余生命:-20");
 		
-		verify(out).println("李四被打败了");
+		inorder.verify(out).println("李四被打败了");
 	}
 	
 	@Test
@@ -509,7 +510,7 @@ public class GameTest {
 		.thenReturn(1)
 		.thenReturn(1);
 		
-		Attribute halo = new Halo("眩晕", 3);
+		Attribute halo = new Halo("眩晕", 2);
 		Weapon haloWeapon = new Weapon("晕锤", 15, halo, haloRandom);
 		Attribute freeze = new Freeze("冰冻", 2);
 		Weapon freezeWeapon = new Weapon("冰刀", 20, freeze, freezeRandom);
@@ -517,25 +518,25 @@ public class GameTest {
 		Soldier playerB = new Soldier("张三", 20, 100, freezeWeapon, 10);
 		Game game = new Game(playerA, playerB, out);
 		game.start();
-		verify(out).println("战士李四用晕锤攻击了战士张三,张三受到15点伤害,张三晕倒了,张三剩余生命:85");
-		verify(out).println("张三晕倒了,无法攻击,眩晕还剩:1轮");
+		inorder.verify(out).println("战士李四用晕锤攻击了战士张三,张三受到15点伤害,张三晕倒了,张三剩余生命:85");
+		inorder.verify(out).println("张三晕倒了,无法攻击,眩晕还剩:1轮");
 		
-		verify(out).println("战士李四用晕锤攻击了战士张三,张三受到15点伤害,张三剩余生命:70");
-		verify(out).println("张三晕倒了,无法攻击,眩晕还剩:0轮");
+		inorder.verify(out).println("战士李四用晕锤攻击了战士张三,张三受到15点伤害,张三剩余生命:70");
+		inorder.verify(out).println("张三晕倒了,无法攻击,眩晕还剩:0轮");
 
-		verify(out).println("战士李四用晕锤攻击了战士张三,张三受到15点伤害,张三剩余生命:55");
-		verify(out).println("战士张三用冰刀攻击了战士李四,李四受到30点伤害,李四冻僵了,李四剩余生命:70");
+		inorder.verify(out).println("战士李四用晕锤攻击了战士张三,张三受到15点伤害,张三剩余生命:55");
+		inorder.verify(out).println("战士张三用冰刀攻击了战士李四,李四受到30点伤害,李四冻僵了,李四剩余生命:70");
 		
-		verify(out).println("战士李四用晕锤攻击了战士张三,张三受到15点伤害,张三剩余生命:40");
-		verify(out).println("战士张三用冰刀攻击了战士李四,李四受到30点伤害,李四剩余生命:40");
+		inorder.verify(out).println("战士李四用晕锤攻击了战士张三,张三受到15点伤害,张三剩余生命:40");
+		inorder.verify(out).println("战士张三用冰刀攻击了战士李四,李四受到30点伤害,李四剩余生命:40");
 		
-		verify(out).println("战士李四用晕锤攻击了战士张三,张三受到15点伤害,张三剩余生命:25");
-		verify(out).println("战士张三用冰刀攻击了战士李四,李四受到30点伤害,李四剩余生命:10");
+		inorder.verify(out).println("战士李四用晕锤攻击了战士张三,张三受到15点伤害,张三剩余生命:25");
+		inorder.verify(out).println("战士张三用冰刀攻击了战士李四,李四受到30点伤害,李四剩余生命:10");
 		
-		verify(out).println("李四冻得直哆嗦,没有击中张三");
-		verify(out).println("战士张三用冰刀攻击了战士李四,李四受到30点伤害,李四剩余生命:-20");
+		inorder.verify(out).println("李四冻得直哆嗦,没有击中张三");
+		inorder.verify(out).println("战士张三用冰刀攻击了战士李四,李四受到30点伤害,李四剩余生命:-20");
 		
-		verify(out).println("李四被打败了");
+		inorder.verify(out).println("李四被打败了");
 	}
 	
 	//*----------------------fourth problem step one finished-----------------------------------------
@@ -559,38 +560,38 @@ public class GameTest {
 		Game game = new Game(playerA, playerB, out);
 		game.start();
 		
-		verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三烧伤了,张三剩余生命:90");
-		verify(out).println("张三受到2点烧伤伤害,张三剩余生命:88");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:90");
+		inorder.verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三烧伤了,张三剩余生命:90");
+		inorder.verify(out).println("张三受到2点烧伤伤害,张三剩余生命:88");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:90");
 		
-		verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:78");
-		verify(out).println("张三受到2点烧伤伤害,张三剩余生命:76");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:80");
+		inorder.verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:78");
+		inorder.verify(out).println("张三受到2点烧伤伤害,张三剩余生命:76");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:80");
 		
-		verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:66");		
-		verify(out).println("张三受到2点烧伤伤害,张三剩余生命:64");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:70");
+		inorder.verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:66");		
+		inorder.verify(out).println("张三受到2点烧伤伤害,张三剩余生命:64");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:70");
 		
-		verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三冻僵了,张三剩余生命:54");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:60");
+		inorder.verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三冻僵了,张三剩余生命:54");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:60");
 		
-		verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:44");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:50");		
+		inorder.verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:44");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:50");		
 		
-		verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:34");		
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:40");
+		inorder.verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:34");		
+		inorder.verify(out).println("张三冻得直哆嗦,没有击中李四");		
 		
-		verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:24");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:30");
+		inorder.verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:24");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:40");
 		
-		verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:14");
-		verify(out).println("张三冻得直哆嗦,没有击中李四");
+		inorder.verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:14");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:30");
 		
-		verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:4");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:20");
+		inorder.verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:4");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:20");
 		
-		verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:-6");
-		verify(out).println("张三被打败了");
+		inorder.verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:-6");
+		inorder.verify(out).println("张三被打败了");
 	}
 	
 	@Test
@@ -612,37 +613,37 @@ public class GameTest {
 		Game game = new Game(playerA, playerB, out);
 		game.start();
 		
-		verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三烧伤了,张三剩余生命:90");
-		verify(out).println("张三受到2点烧伤伤害,张三剩余生命:88");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:90");
+		inorder.verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三烧伤了,张三剩余生命:90");
+		inorder.verify(out).println("张三受到2点烧伤伤害,张三剩余生命:88");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:90");
 		
-		verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三冻僵了,张三剩余生命:78");
+		inorder.verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三冻僵了,张三剩余生命:78");
 		verify(out, never()).println("张三受到2点烧伤伤害,张三剩余生命:86");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:80");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:80");
 		
-		verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:68");		
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:70");
+		inorder.verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:68");		
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:70");
 		
-		verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:58");
-		verify(out).println("张三冻得直哆嗦,没有击中李四");
+		inorder.verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:58");
+		inorder.verify(out).println("张三冻得直哆嗦,没有击中李四");
 		
-		verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:48");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:60");		
+		inorder.verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:48");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:60");		
 		
-		verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:38");		
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:50");
+		inorder.verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:38");		
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:50");
 		
-		verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:28");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:40");
+		inorder.verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:28");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:40");
 		
-		verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:18");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:30");
+		inorder.verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:18");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:30");
 		
-		verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:8");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:20");
+		inorder.verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:8");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:20");
 		
-		verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:-2");
-		verify(out).println("张三被打败了");
+		inorder.verify(out).println("战士李四用烈焰寒冰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:-2");
+		inorder.verify(out).println("张三被打败了");
 	}
 	
 	@Test
@@ -664,31 +665,31 @@ public class GameTest {
 		Game game = new Game(playerA, playerB, out);
 		game.start();
 		
-		verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三烧伤了,张三剩余生命:90");
-		verify(out).println("张三受到2点烧伤伤害,张三剩余生命:88");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:90");
+		inorder.verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三烧伤了,张三剩余生命:90");
+		inorder.verify(out).println("张三受到2点烧伤伤害,张三剩余生命:88");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:90");
 		
-		verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三烧伤了,张三剩余生命:78");
-		verify(out).println("张三受到7点烧伤伤害,张三剩余生命:71");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:80");
+		inorder.verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三烧伤了,张三剩余生命:78");
+		inorder.verify(out).println("张三受到7点烧伤伤害,张三剩余生命:71");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:80");
 		
-		verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:61");	
-		verify(out).println("张三受到7点烧伤伤害,张三剩余生命:54");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:70");
+		inorder.verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:61");	
+		inorder.verify(out).println("张三受到7点烧伤伤害,张三剩余生命:54");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:70");
 		
-		verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:44");
-		verify(out).println("张三受到7点烧伤伤害,张三剩余生命:37");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:60");
+		inorder.verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:44");
+		inorder.verify(out).println("张三受到7点烧伤伤害,张三剩余生命:37");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:60");
 		
-		verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:27");
-		verify(out).println("张三受到7点烧伤伤害,张三剩余生命:20");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:50");		
+		inorder.verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:27");
+		inorder.verify(out).println("张三受到7点烧伤伤害,张三剩余生命:20");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:50");		
 		
-		verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:10");		
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:40");
+		inorder.verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:10");		
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:40");
 		
-		verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:0");
-		verify(out).println("张三被打败了");
+		inorder.verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:0");
+		inorder.verify(out).println("张三被打败了");
 	}
 	
 	@Test
@@ -710,34 +711,34 @@ public class GameTest {
 		Game game = new Game(playerA, playerB, out);
 		game.start();
 		
-		verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三烧伤了,张三剩余生命:90");
-		verify(out).println("张三受到2点烧伤伤害,张三剩余生命:88");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:90");
+		inorder.verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三烧伤了,张三剩余生命:90");
+		inorder.verify(out).println("张三受到2点烧伤伤害,张三剩余生命:88");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:90");
 		
-		verify(out).println("战士李四用烈焰剑攻击了普通人张三,李四发动了全力一击,张三受到20点伤害,张三剩余生命:68");
-		verify(out).println("张三受到2点烧伤伤害,张三剩余生命:66");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:80");
+		inorder.verify(out).println("战士李四用烈焰剑攻击了普通人张三,李四发动了全力一击,张三受到20点伤害,张三剩余生命:68");
+		inorder.verify(out).println("张三受到2点烧伤伤害,张三剩余生命:66");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:80");
 		
-		verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:56");	
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:70");
+		inorder.verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:56");	
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:70");
 		
-		verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:46");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:60");
+		inorder.verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:46");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:60");
 		
-		verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:36");
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:50");		
+		inorder.verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:36");
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:50");		
 		
-		verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:26");		
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:40");
+		inorder.verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:26");		
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:40");
 		
-		verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:16");		
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:30");
+		inorder.verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:16");		
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:30");
 		
-		verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:6");		
-		verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:20");
+		inorder.verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:6");		
+		inorder.verify(out).println("普通人张三攻击了战士李四,李四受到10点伤害,李四剩余生命:20");
 		
-		verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:-4");		
-		verify(out).println("张三被打败了");
+		inorder.verify(out).println("战士李四用烈焰剑攻击了普通人张三,张三受到10点伤害,张三剩余生命:-4");		
+		inorder.verify(out).println("张三被打败了");
 	}
 	
 	//*----------------------fourth problem step two finished-----------------------------------------
