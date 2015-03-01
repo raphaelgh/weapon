@@ -35,6 +35,10 @@ public class WeaponRespository {
 		}
 	}
 	
+	public WeaponRespository shuttle(){
+		return list.size() == 0 ? new WeaponRespository(new Random()) : this;
+	}
+	
 	private Weapon generatorWeapon(Random random){
 		int index = random.nextInt(weaponName.length);
 		String name = weaponName[index];			
@@ -94,7 +98,8 @@ public class WeaponRespository {
 	}
 	
 	public Weapon fetchWeapon(int number){
-		return list.get(number);
+		number = number >= list.size() ? list.size() : number;
+		return list.size() == 0 ? NULLWeapon.getInstance() : list.remove(number);
 	}
 	
 	public int size(){

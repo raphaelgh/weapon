@@ -24,24 +24,28 @@ public class Game {
 	}
 
 	public void start(){
+		boolean isPlayerBDefeated = false;
 		while(playerA.isLive(out)){
 			playerA.attack(playerB, out);
 			if(!playerB.isLive(out)){
+				isPlayerBDefeated = true;
 				break;
 			}
 			playerB.attack(playerA, out);
 		}
-		Player player = playerA.isLive(out) ? playerB : playerA;
+		Player player = isPlayerBDefeated ? playerB : playerA;
 		player.outputStatus(out);
 	}
 	
 	private void start(InputStream in){
 		int i = 1;
+		boolean isPlayerBDefeated = false;
 		System.out.println("--------第"+i+"回合-------------");
 		while(playerA.isLive(out)){						
 			playerA.attack(playerB, out);
 			wait123(2);
 			if(!playerB.isLive(out)){
+				isPlayerBDefeated = true;
 				break;
 			}
 			playerB.attack(playerA, out);
@@ -51,7 +55,7 @@ public class Game {
 			System.out.println();
 			System.out.println("--------第"+i+"回合-------------");
 		}
-		Player player = playerA.isLive(out) ? playerB : playerA;
+		Player player = isPlayerBDefeated ? playerB : playerA;
 		player.outputStatus(out);
 		System.out.println("输入bye结束游戏,按回车键游戏继续");
 	}
@@ -64,14 +68,6 @@ public class Game {
 		}
 	}
 	
-//	private void continue123(InputStream in){
-//		System.err.println("按回车键继续...");
-//		try {
-//			in.read();
-//		} catch (IOException e) {				
-//		}
-//	}
-	
 	public static void main(String[] args){		
 		Random random = new Random();
 		WeaponRespository weaponRes = new WeaponRespository(random);	
@@ -80,6 +76,7 @@ public class Game {
 		while(!isBye()){
 			game = gameGenerator(random, weaponRes);
 			game.start(System.in);
+			weaponRes = weaponRes.shuttle();
 		}		
 	}
 	
